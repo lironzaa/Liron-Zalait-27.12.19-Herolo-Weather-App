@@ -1,0 +1,25 @@
+[
+  {
+    "LocalObservationDateTime": "2019-12-29T01:15:00+09:00",
+    "EpochTime": 1577549700,
+    "WeatherText": "Partly cloudy",
+    "WeatherIcon": 35,
+    "HasPrecipitation": false,
+    "PrecipitationType": null,
+    "IsDayTime": false,
+    "Temperature": {
+      "Metric": {
+        "Value": 5.4,
+        "Unit": "C",
+        "UnitType": 17
+      },
+      "Imperial": {
+        "Value": 42,
+        "Unit": "F",
+        "UnitType": 18
+      }
+    },
+    "MobileLink": "http://m.accuweather.com/en/jp/tokyo/226396/current-weather/226396?lang=en-us",
+    "Link": "http://www.accuweather.com/en/jp/tokyo/226396/current-weather/226396?lang=en-us"
+  }
+]
