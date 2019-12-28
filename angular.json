@@ -21,7 +21,37 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "dailyTelAviv.json",
+                "input": "./",
+                "output": "./assets/"
+              },
+              {
+                "glob": "dailyTokyo.json",
+                "input": "./",
+                "output": "./assets/"
+              },
+              {
+                "glob": "autocompleteT.json",
+                "input": "./",
+                "output": "./assets/"
+              },
+              {
+                "glob": "autocompleteTE.json",
+                "input": "./",
+                "output": "./assets/"
+              },
+              {
+                "glob": "autocompleteTEL.json",
+                "input": "./",
+                "output": "./assets/"
+              },
+              {
+                "glob": "autocompleteTEL().json",
+                "input": "./",
+                "output": "./assets/"
+              }
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
