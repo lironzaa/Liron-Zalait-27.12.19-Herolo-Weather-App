@@ -15,31 +15,37 @@ export class WeatherService {
   constructor(private http: HttpClient) { }
 
   getAutocompleteSearch(searchedQuery) {
-    return this.http.get(`${this.apiAutocomplete}/?apikey=${this.weatherAPIKey}&q=${searchedQuery}`)
+    return this.http.get(`${this.apiAutocomplete}/?apikey=${this.weatherAPIKey}&q=${searchedQuery}`);
   }
 
   getFakeAutocompleteSearch() {
-    return this.http.get('http://localhost:4200/assets/autocompleteT.json')
+    return this.http.get('http://localhost:4200/assets/autocompleteT.json');
   }
 
-  getDailyWeather(fetchedCity) {
-    return this.http.get(`${this.apiDaily}/${fetchedCity}?apikey=${this.weatherAPIKey}`)
+  getDailyWeather(fetchedCityIndex) {
+    return this.http.get(`${this.apiDaily}/${fetchedCityIndex}?apikey=${this.weatherAPIKey}`);
   }
 
-  getFakeDailyWeather() {
-    return this.http.get('http://localhost:4200/assets/dailyTelAviv.json')
+  getFakeDailyWeather(fetchedCityIndex) {
+    console.log(fetchedCityIndex);
+    if (fetchedCityIndex === 215854) {
+      return this.http.get('http://localhost:4200/assets/dailyTelAviv.json');
+    }
+    if (fetchedCityIndex === 226396) {
+      return this.http.get('http://localhost:4200/assets/dailyTokyo.json');
+    }
   }
 
   getFakeDailyWeatherTokyo() {
-    return this.http.get('http://localhost:4200/assets/dailyTokyo.json')
+    return this.http.get('http://localhost:4200/assets/dailyTokyo.json');
   }
 
   getFiveDaysWeather() {
-    return this.http.get(`${this.apiFiveDays}/215854?apikey=${this.weatherAPIKey}`)
+    return this.http.get(`${this.apiFiveDays}/215854?apikey=${this.weatherAPIKey}`);
   }
 
   getFakeFiveDaysWeather() {
-    return this.http.get('http://localhost:4200/assets/fiveDays.json')
+    return this.http.get('http://localhost:4200/assets/fiveDays.json');
   }
 
 }

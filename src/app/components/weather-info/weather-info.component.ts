@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WeatherService } from 'src/app/services/weather.service';
 import { map } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
@@ -12,60 +12,64 @@ import * as fromWeather from './../../store/weather.reducer';
   templateUrl: './weather-info.component.html',
   styleUrls: ['./weather-info.component.css']
 })
-export class WeatherInfoComponent implements OnInit {
+export class WeatherInfoComponent implements OnInit, OnDestroy {
   forecastWeatherData;
-  dailyWeatherData: Weather[];
-  weatherState$: Observable<{ fetchedCityIndex: number }>;
-  sub: Subscription;
+  weatherState$: Observable<fromWeather.State>;
+  subscription: Subscription;
   fetchedCityIndex: number;
-  /* fetchedCityIndex: number = 215854; */
+  dailyTemperature: number;
+  weatherText: string;
+  isDailyLoading: boolean = false;
 
   constructor(private weatherService: WeatherService,
-    private store: Store<{ weather: { fetchedCityIndex: number } }>) { }
+    private store: Store<fromWeather.AppState>) { }
 
-  ngOnInit() {
-    /* this.weatherState$ = this.store.select('weather'); */
-    this.store.select('weather').subscribe(
-      data => {
-        this.fetchedCityIndex = data.fetchedCityIndex;
-        console.log(this.fetchedCityIndex);
-      })
+  ngOnInit(): void {
     /*     this.weatherService.getFiveDaysWeather()
           .subscribe(weatherData => {
             console.log(weatherData);
           }) */
+    this.subscription = this.store.select('weather').subscribe(
+      weatherStateData => {
+        this.fetchedCityIndex = weatherStateData.fetchedCityIndex;
+        this.dailyTemperature = weatherStateData.dailyTemperature;
+        this.weatherText = weatherStateData.weatherText;
+        this.isDailyLoading = weatherStateData.isDailyLoading;
+      })
+    this.store.dispatch(new WeatherActions.ShowSpinner());
+    console.log(this.fetchedCityIndex);
+    this.weatherService.getFakeDailyWeather(this.fetchedCityIndex)
+      .pipe(map((results: any) => {
+        return results.map(res => ({
+          temperature: res.Temperature.Metric.Value,
+          weatherText: res.WeatherText
+        }))
+      }))
+      .subscribe(dailyWeatherData => {
+        console.log(dailyWeatherData);
+        this.store.dispatch(new WeatherActions.UpdateDailyWeather({ fetchedCityIndex: this.fetchedCityIndex, dailyTemperature: dailyWeatherData[0].temperature, weatherText: dailyWeatherData[0].weatherText }));
+      })
     this.weatherService.getFakeFiveDaysWeather()
       .subscribe(forecastWeatherData => {
         this.forecastWeatherData = forecastWeatherData;
       })
-    this.weatherService.getFakeDailyWeather()
+  }
+
+  test(): void {
+    this.store.dispatch(new WeatherActions.ShowSpinner());
+    this.weatherService.getFakeDailyWeather(226396)
       .pipe(map((results: any) => {
-        console.log(results);
         return results.map(res => ({
           temperature: res.Temperature.Metric.Value,
           weatherText: res.WeatherText
         }))
       }))
       .subscribe(dailyWeatherData => {
-        this.dailyWeatherData = dailyWeatherData;
-        console.log(this.dailyWeatherData);
+        this.store.dispatch(new WeatherActions.UpdateDailyWeather({ fetchedCityIndex: 226396, dailyTemperature: dailyWeatherData[0].temperature, weatherText: dailyWeatherData[0].weatherText }));
       })
   }
 
-  test() {
-    this.store.dispatch(new WeatherActions.UpdateFetchedCityIndex(226396));
-    this.weatherService.getFakeDailyWeatherTokyo()
-      .pipe(map((results: any) => {
-        console.log(results);
-        return results.map(res => ({
-          temperature: res.Temperature.Metric.Value,
-          weatherText: res.WeatherText
-        }))
-      }))
-      .subscribe(dailyWeatherData => {
-        this.store.dispatch(new WeatherActions.UpdateDailyWeather(dailyWeatherData));
-        this.dailyWeatherData = dailyWeatherData;
-        console.log(this.dailyWeatherData);
-      })
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

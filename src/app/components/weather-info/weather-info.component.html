@@ -1,12 +1,17 @@
 <div class="jumbotron">
-  <p>{{fetchedCityIndex}}</p>
-  <ng-container *ngIf="dailyWeatherData">
+  <ng-container *ngIf="!isDailyLoading; else showLoading">
+    <p>{{fetchedCityIndex}}</p>
     <p>{{searchedCity}}</p>
-    <p>{{dailyWeatherData[0].temperature}} C°</p>
-    <p>{{dailyWeatherData[0].weatherText}}</p>
-    <button type="button" class="btn btn-primary">Add to favorites</button>
-    <button type="button" class="btn btn-primary" (click)="test()">test</button>
+    <p>{{dailyTemperature}} C°</p>
+    <p>{{weatherText}}</p>
   </ng-container>
+  <ng-template #showLoading>
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </ng-template>
+  <button type="button" class="btn btn-primary mr-3">Add to favorites</button>
+  <button type="button" class="btn btn-primary" (click)="test()">test</button>
   <ng-container *ngIf="forecastWeatherData">
     <app-weather-info-card *ngFor="let weatherItem of forecastWeatherData.DailyForecasts; index as i"
       [forecastWeatherData]="forecastWeatherData.DailyForecasts[i]">

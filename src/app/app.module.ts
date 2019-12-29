@@ -5,7 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { weatherReducer } from './store/weather.reducer';
+import { environment } from './../environments/environment';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -31,7 +33,8 @@ import { WeatherInfoCardComponent } from './components/weather-info-card/weather
     HttpClientModule,
     FormsModule,
     AutocompleteLibModule,
-    StoreModule.forRoot({ weather: weatherReducer })
+    StoreModule.forRoot({ weather: weatherReducer }),
+    StoreDevtoolsModule.instrument({ logOnly: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,15 +1,21 @@
 import * as WeatherActions from './weather.actions';
 
-const initialState: State = {
-  fetchedCityIndex: 215854
-}
-
 export interface State {
-  fetchedCityIndex: number
+  fetchedCityIndex: number,
+  dailyTemperature: number,
+  weatherText: string,
+  isDailyLoading: boolean
 }
 
 export interface AppState {
-  weatherState: State;
+  weather: State;
+}
+
+const initialState: State = {
+  fetchedCityIndex: 215854,
+  dailyTemperature: null,
+  weatherText: '',
+  isDailyLoading: false
 }
 
 export function weatherReducer(state: State = initialState, action: WeatherActions.WeatherActions) {
@@ -17,12 +23,15 @@ export function weatherReducer(state: State = initialState, action: WeatherActio
     case WeatherActions.UPDATE_DAILY_WEATHER:
       return {
         ...state,
-        dailyWeatherData: [action.payload]
+        fetchedCityIndex: action.payload.fetchedCityIndex,
+        dailyTemperature: action.payload.dailyTemperature,
+        weatherText: action.payload.weatherText,
+        isDailyLoading: false
       }
-    case WeatherActions.UPDATE_FETCHED_CITY_INDEX:
+    case WeatherActions.SHOW_SPINNER:
       return {
         ...state,
-        fetchedCityIndex: [action.payload]
+        isDailyLoading: true
       }
     default:
       return state;
