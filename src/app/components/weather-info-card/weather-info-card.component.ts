@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./weather-info-card.component.css']
 })
 export class WeatherInfoCardComponent implements OnInit {
-  @Input() forecastWeatherData;
+  @Input() weatherForecast;
 
   constructor() { }
 

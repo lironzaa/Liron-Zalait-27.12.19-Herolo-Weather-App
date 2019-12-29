@@ -13,13 +13,14 @@ import * as fromWeather from './../../store/weather.reducer';
   styleUrls: ['./weather-info.component.css']
 })
 export class WeatherInfoComponent implements OnInit, OnDestroy {
-  forecastWeatherData;
   weatherState$: Observable<fromWeather.State>;
   subscription: Subscription;
   fetchedCityIndex: number;
   dailyTemperature: number;
   weatherText: string;
   isDailyLoading: boolean = false;
+  weatherForecast: Weather[];
+  isForecastLoading: boolean = false;
 
   constructor(private weatherService: WeatherService,
     private store: Store<fromWeather.AppState>) { }
@@ -35,9 +36,11 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
         this.dailyTemperature = weatherStateData.dailyTemperature;
         this.weatherText = weatherStateData.weatherText;
         this.isDailyLoading = weatherStateData.isDailyLoading;
+        this.weatherForecast = weatherStateData.weatherForecast;
+        this.isForecastLoading = weatherStateData.isForecastLoading;
       })
-    this.store.dispatch(new WeatherActions.ShowSpinner());
-    console.log(this.fetchedCityIndex);
+
+    this.store.dispatch(new WeatherActions.ShowDailySpinner());
     this.weatherService.getFakeDailyWeather(this.fetchedCityIndex)
       .pipe(map((results: any) => {
         return results.map(res => ({
@@ -46,17 +49,25 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
         }))
       }))
       .subscribe(dailyWeatherData => {
-        console.log(dailyWeatherData);
         this.store.dispatch(new WeatherActions.UpdateDailyWeather({ fetchedCityIndex: this.fetchedCityIndex, dailyTemperature: dailyWeatherData[0].temperature, weatherText: dailyWeatherData[0].weatherText }));
       })
+
+    this.store.dispatch(new WeatherActions.ShowForecastSpinner());
     this.weatherService.getFakeFiveDaysWeather()
+      .pipe(map((results: any) => {
+        return results.DailyForecasts.map(res => ({
+          temperature: res.Temperature.Minimum.Value,
+          date: res.Date
+        }))
+      }))
       .subscribe(forecastWeatherData => {
-        this.forecastWeatherData = forecastWeatherData;
+        console.log(forecastWeatherData);
+        this.store.dispatch(new WeatherActions.UpdateForecastWeather(forecastWeatherData));
       })
   }
 
   test(): void {
-    this.store.dispatch(new WeatherActions.ShowSpinner());
+    this.store.dispatch(new WeatherActions.ShowDailySpinner());
     this.weatherService.getFakeDailyWeather(226396)
       .pipe(map((results: any) => {
         return results.map(res => ({

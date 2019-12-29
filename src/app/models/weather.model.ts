@@ -5,5 +5,5 @@ export interface Autocomplete {
 
 export interface Weather {
   temperature: number;
-  weatherText: string;
+  date: string;
 }
