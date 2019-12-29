@@ -43,6 +43,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
     this.store.dispatch(new WeatherActions.ShowDailySpinner());
     this.weatherService.getFakeDailyWeather(this.fetchedCityIndex)
       .pipe(map((results: any) => {
+        console.log(results);
         return results.map(res => ({
           temperature: res.Temperature.Metric.Value,
           weatherText: res.WeatherText
@@ -53,7 +54,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
       })
 
     this.store.dispatch(new WeatherActions.ShowForecastSpinner());
-    this.weatherService.getFakeFiveDaysWeather()
+    this.weatherService.getFakeFiveDaysWeather(this.fetchedCityIndex)
       .pipe(map((results: any) => {
         return results.DailyForecasts.map(res => ({
           temperature: res.Temperature.Minimum.Value,
@@ -77,6 +78,19 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
       }))
       .subscribe(dailyWeatherData => {
         this.store.dispatch(new WeatherActions.UpdateDailyWeather({ fetchedCityIndex: 226396, dailyTemperature: dailyWeatherData[0].temperature, weatherText: dailyWeatherData[0].weatherText }));
+      })
+
+    this.store.dispatch(new WeatherActions.ShowForecastSpinner());
+    this.weatherService.getFakeFiveDaysWeather(226396)
+      .pipe(map((results: any) => {
+        return results.DailyForecasts.map(res => ({
+          temperature: res.Temperature.Minimum.Value,
+          date: res.Date
+        }))
+      }))
+      .subscribe(forecastWeatherData => {
+        console.log(forecastWeatherData);
+        this.store.dispatch(new WeatherActions.UpdateForecastWeather(forecastWeatherData));
       })
   }
 

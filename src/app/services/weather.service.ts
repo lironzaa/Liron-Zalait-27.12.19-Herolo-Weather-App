@@ -36,16 +36,17 @@ export class WeatherService {
     }
   }
 
-  getFakeDailyWeatherTokyo() {
-    return this.http.get('http://localhost:4200/assets/dailyTokyo.json');
-  }
-
   getFiveDaysWeather() {
     return this.http.get(`${this.apiFiveDays}/215854?apikey=${this.weatherAPIKey}`);
   }
 
-  getFakeFiveDaysWeather() {
-    return this.http.get('http://localhost:4200/assets/fiveDays.json');
+  getFakeFiveDaysWeather(fetchedCityIndex) {
+    console.log(fetchedCityIndex);
+    if (fetchedCityIndex === 215854) {
+      return this.http.get('http://localhost:4200/assets/fiveDaysTelAviv.json');
+    }
+    if (fetchedCityIndex === 226396) {
+      return this.http.get('http://localhost:4200/assets/fiveDaysTokyo.json');
+    }
   }
-
 }

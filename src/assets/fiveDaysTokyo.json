@@ -1,0 +1,172 @@
+{
+  "Headline": {
+    "EffectiveDate": "2019-12-30T07:00:00+09:00",
+    "EffectiveEpochDate": 1577656800,
+    "Severity": 5,
+    "Text": "Expect showers Monday",
+    "Category": "rain",
+    "EndDate": "2019-12-30T19:00:00+09:00",
+    "EndEpochDate": 1577700000,
+    "MobileLink": "http://m.accuweather.com/en/jp/tokyo/226396/extended-weather-forecast/226396?unit=c&lang=en-us",
+    "Link": "http://www.accuweather.com/en/jp/tokyo/226396/daily-weather-forecast/226396?unit=c&lang=en-us"
+  },
+  "DailyForecasts": [
+    {
+      "Date": "2019-12-30T07:00:00+09:00",
+      "EpochDate": 1577656800,
+      "Temperature": {
+        "Minimum": {
+          "Value": 6.7,
+          "Unit": "C",
+          "UnitType": 17
+        },
+        "Maximum": {
+          "Value": 11.1,
+          "Unit": "C",
+          "UnitType": 17
+        }
+      },
+      "Day": {
+        "Icon": 12,
+        "IconPhrase": "Showers",
+        "HasPrecipitation": true,
+        "PrecipitationType": "Rain",
+        "PrecipitationIntensity": "Light"
+      },
+      "Night": {
+        "Icon": 7,
+        "IconPhrase": "Cloudy",
+        "HasPrecipitation": false
+      },
+      "Sources": [
+        "AccuWeather"
+      ],
+      "MobileLink": "http://m.accuweather.com/en/jp/tokyo/226396/daily-weather-forecast/226396?day=1&unit=c&lang=en-us",
+      "Link": "http://www.accuweather.com/en/jp/tokyo/226396/daily-weather-forecast/226396?day=1&unit=c&lang=en-us"
+    },
+    {
+      "Date": "2019-12-31T07:00:00+09:00",
+      "EpochDate": 1577743200,
+      "Temperature": {
+        "Minimum": {
+          "Value": 1.7,
+          "Unit": "C",
+          "UnitType": 17
+        },
+        "Maximum": {
+          "Value": 15.6,
+          "Unit": "C",
+          "UnitType": 17
+        }
+      },
+      "Day": {
+        "Icon": 3,
+        "IconPhrase": "Partly sunny",
+        "HasPrecipitation": false
+      },
+      "Night": {
+        "Icon": 35,
+        "IconPhrase": "Partly cloudy",
+        "HasPrecipitation": false
+      },
+      "Sources": [
+        "AccuWeather"
+      ],
+      "MobileLink": "http://m.accuweather.com/en/jp/tokyo/226396/daily-weather-forecast/226396?day=2&unit=c&lang=en-us",
+      "Link": "http://www.accuweather.com/en/jp/tokyo/226396/daily-weather-forecast/226396?day=2&unit=c&lang=en-us"
+    },
+    {
+      "Date": "2020-01-01T07:00:00+09:00",
+      "EpochDate": 1577829600,
+      "Temperature": {
+        "Minimum": {
+          "Value": 1.4,
+          "Unit": "C",
+          "UnitType": 17
+        },
+        "Maximum": {
+          "Value": 8.8,
+          "Unit": "C",
+          "UnitType": 17
+        }
+      },
+      "Day": {
+        "Icon": 3,
+        "IconPhrase": "Partly sunny",
+        "HasPrecipitation": false
+      },
+      "Night": {
+        "Icon": 33,
+        "IconPhrase": "Clear",
+        "HasPrecipitation": false
+      },
+      "Sources": [
+        "AccuWeather"
+      ],
+      "MobileLink": "http://m.accuweather.com/en/jp/tokyo/226396/daily-weather-forecast/226396?day=3&unit=c&lang=en-us",
+      "Link": "http://www.accuweather.com/en/jp/tokyo/226396/daily-weather-forecast/226396?day=3&unit=c&lang=en-us"
+    },
+    {
+      "Date": "2020-01-02T07:00:00+09:00",
+      "EpochDate": 1577916000,
+      "Temperature": {
+        "Minimum": {
+          "Value": 2.6,
+          "Unit": "C",
+          "UnitType": 17
+        },
+        "Maximum": {
+          "Value": 11.3,
+          "Unit": "C",
+          "UnitType": 17
+        }
+      },
+      "Day": {
+        "Icon": 1,
+        "IconPhrase": "Sunny",
+        "HasPrecipitation": false
+      },
+      "Night": {
+        "Icon": 35,
+        "IconPhrase": "Partly cloudy",
+        "HasPrecipitation": false
+      },
+      "Sources": [
+        "AccuWeather"
+      ],
+      "MobileLink": "http://m.accuweather.com/en/jp/tokyo/226396/daily-weather-forecast/226396?day=4&unit=c&lang=en-us",
+      "Link": "http://www.accuweather.com/en/jp/tokyo/226396/daily-weather-forecast/226396?day=4&unit=c&lang=en-us"
+    },
+    {
+      "Date": "2020-01-03T07:00:00+09:00",
+      "EpochDate": 1578002400,
+      "Temperature": {
+        "Minimum": {
+          "Value": 3.5,
+          "Unit": "C",
+          "UnitType": 17
+        },
+        "Maximum": {
+          "Value": 11.3,
+          "Unit": "C",
+          "UnitType": 17
+        }
+      },
+      "Day": {
+        "Icon": 2,
+        "IconPhrase": "Mostly sunny",
+        "HasPrecipitation": false
+      },
+      "Night": {
+        "Icon": 33,
+        "IconPhrase": "Clear",
+        "HasPrecipitation": false
+      },
+      "Sources": [
+        "AccuWeather"
+      ],
+      "MobileLink": "http://m.accuweather.com/en/jp/tokyo/226396/daily-weather-forecast/226396?day=5&unit=c&lang=en-us",
+      "Link": "http://www.accuweather.com/en/jp/tokyo/226396/daily-weather-forecast/226396?day=5&unit=c&lang=en-us"
+    }
+  ]
+}
