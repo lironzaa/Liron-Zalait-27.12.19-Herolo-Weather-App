@@ -3,8 +3,8 @@ import { WeatherService } from 'src/app/services/weather.service';
 import { map } from 'rxjs/operators';
 import { Autocomplete } from './../../models/weather.model';
 import { Store } from '@ngrx/store';
-import * as fromWeather from './../../store/weather.reducer';
 import * as WeatherActions from './../../store/weather.actions';
+import * as fromApp from './../../store/app.reducer';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 export class WeatherSearchComponent implements OnInit, OnDestroy {
 
   constructor(private weatherService: WeatherService,
-    private store: Store<fromWeather.AppState>,
+    private store: Store<fromApp.AppState>,
     private toastr: ToastrService
   ) { }
 
@@ -70,7 +70,7 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
             }));
           }) */
     this.store.dispatch(new WeatherActions.ShowForecastSpinner());
-    /* this.subscription = this.weatherService.getFakeFiveDaysWeather(226396)
+    this.subscription = this.weatherService.getFakeFiveDaysWeather(226396)
       .pipe(map((forecastWeatherData: any) => {
         return forecastWeatherData.DailyForecasts.map(res => ({
           temperature: res.Temperature.Minimum.Value,
@@ -83,14 +83,14 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
         this.store.dispatch(new WeatherActions.UpdateForecastWeather(forecastWeatherData));
       }, error => {
         this.toastr.error(error.message, 'An error occurred, Please try again later');
-      }) */
-    this.subscription = this.weatherService.getForecastWeather()
+      })
+    /* this.subscription = this.weatherService.getForecastWeather()
       .subscribe(forecastWeatherData => {
         console.log(forecastWeatherData);
       }, error => {
         this.toastr.error('An error occurred, Please try again later', 'Error!');
         this.store.dispatch(new WeatherActions.RemoveForecastSpinner());
-      })
+      }) */
   }
 
   allowEnglishLettersOnKeyUp(event: any): void {

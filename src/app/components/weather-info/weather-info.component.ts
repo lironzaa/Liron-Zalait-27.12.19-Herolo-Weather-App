@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { Weather } from './../../models/weather.model';
 import { Store } from '@ngrx/store';
 import * as WeatherActions from './../../store/weather.actions';
-import * as fromWeather from './../../store/weather.reducer';
+import * as fromApp from './../../store/app.reducer';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -25,7 +25,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
   isForecastLoading: boolean = false;
 
   constructor(private weatherService: WeatherService,
-    private store: Store<fromWeather.AppState>,
+    private store: Store<fromApp.AppState>,
     private toastr: ToastrService
   ) { }
 

@@ -12,10 +12,6 @@ export interface State {
   isForecastLoading: boolean
 }
 
-export interface AppState {
-  weather: State;
-}
-
 const initialState: State = {
   fetchedCityIndex: 215854,
   fetchedCityName: 'Tel Aviv',
