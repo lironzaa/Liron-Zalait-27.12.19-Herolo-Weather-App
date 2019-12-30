@@ -1,20 +1,27 @@
-<div class="jumbotron">
-  <ng-container *ngIf="!isDailyLoading; else showLoading">
-    <p>{{fetchedCityIndex}}</p>
-    <p>{{searchedCity}}</p>
-    <p>{{dailyTemperature}} C°</p>
-    <p>{{weatherText}}</p>
-  </ng-container>
-  <ng-template #showLoading>
-    <div class="spinner-border text-primary" role="status">
-      <span class="sr-only">Loading...</span>
+<ng-container *ngIf="!isDailyLoading; else showLoading">
+  <div class="row">
+    <div class="mx-auto">
+      <div class="card">
+        <img class="card-img-top">
+        <div class="card-body">
+          <img src="https://developer.accuweather.com/sites/default/files/{{weatherIcon}}-s.png">
+          <h5 class="card-title">{{fetchedCityName}}</h5>
+          <h6 class="card-text">{{dailyTemperature}} C°</h6>
+          <h6>{{weatherText}}</h6>
+        </div>
+      </div>
+      <button type="button" class="btn btn-info mt-2">Add to favorites</button>
     </div>
-  </ng-template>
-  <button type="button" class="btn btn-primary mr-3">Add to favorites</button>
-  <button type="button" class="btn btn-primary" (click)="test()">test</button>
-  <div class="card-deck" *ngIf="!isForecastLoading; else showLoading">
-    <app-weather-info-card class="card" *ngFor="let weatherItem of weatherForecast; index as i"
-      [weatherForecast]="weatherForecast[i]">
-    </app-weather-info-card>
   </div>
+</ng-container>
+<ng-template #showLoading>
+  <span class="sr-only">Loading...</span>
+  <div class="spinner-border text-primary" role="status">
+  </div>
+</ng-template>
+<button type="button" class="btn btn-primary" (click)="test()">test</button>
+<div class="card-deck" *ngIf="!isForecastLoading; else showLoading">
+  <app-weather-info-card class="card" *ngFor="let weatherItem of weatherForecast; index as i"
+    [weatherForecast]="weatherForecast[i]">
+  </app-weather-info-card>
 </div>

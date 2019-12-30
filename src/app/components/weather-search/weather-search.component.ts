@@ -17,6 +17,7 @@ export class WeatherSearchComponent implements OnInit {
 
   keyword: string = 'name';
   autocompleteData: Autocomplete[] = [];
+  public placeholder: string = 'Search for a city';
 
   selectEvent(item) {
     if (item.name === 'Tokyo') {

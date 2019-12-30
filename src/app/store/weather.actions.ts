@@ -11,7 +11,8 @@ export class UpdateDailyWeather implements Action {
   constructor(public payload: {
     fetchedCityIndex: number,
     dailyTemperature: number,
-    weatherText: string
+    weatherText: string,
+    weatherIcon: number
   }) { }
 }
 

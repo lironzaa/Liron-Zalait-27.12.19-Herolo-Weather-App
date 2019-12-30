@@ -16,8 +16,10 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
   weatherState$: Observable<fromWeather.State>;
   subscription: Subscription;
   fetchedCityIndex: number;
+  fetchedCityName: string;
   dailyTemperature: number;
   weatherText: string;
+  weatherIcon: number;
   isDailyLoading: boolean = false;
   weatherForecast: Weather[];
   isForecastLoading: boolean = false;
@@ -33,8 +35,10 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
     this.subscription = this.store.select('weather').subscribe(
       weatherStateData => {
         this.fetchedCityIndex = weatherStateData.fetchedCityIndex;
+        this.fetchedCityName = weatherStateData.fetchedCityName;
         this.dailyTemperature = weatherStateData.dailyTemperature;
         this.weatherText = weatherStateData.weatherText;
+        this.weatherIcon = weatherStateData.weatherIcon;
         this.isDailyLoading = weatherStateData.isDailyLoading;
         this.weatherForecast = weatherStateData.weatherForecast;
         this.isForecastLoading = weatherStateData.isForecastLoading;
@@ -46,11 +50,17 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
         console.log(results);
         return results.map(res => ({
           temperature: res.Temperature.Metric.Value,
-          weatherText: res.WeatherText
+          weatherText: res.WeatherText,
+          weatherIcon: res.WeatherIcon
         }))
       }))
       .subscribe(dailyWeatherData => {
-        this.store.dispatch(new WeatherActions.UpdateDailyWeather({ fetchedCityIndex: this.fetchedCityIndex, dailyTemperature: dailyWeatherData[0].temperature, weatherText: dailyWeatherData[0].weatherText }));
+        this.store.dispatch(new WeatherActions.UpdateDailyWeather({
+          fetchedCityIndex: this.fetchedCityIndex,
+          dailyTemperature: dailyWeatherData[0].temperature,
+          weatherText: dailyWeatherData[0].weatherText,
+          weatherIcon: dailyWeatherData[0].weatherIcon
+        }));
       })
 
     this.store.dispatch(new WeatherActions.ShowForecastSpinner());
@@ -77,7 +87,12 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
         }))
       }))
       .subscribe(dailyWeatherData => {
-        this.store.dispatch(new WeatherActions.UpdateDailyWeather({ fetchedCityIndex: 226396, dailyTemperature: dailyWeatherData[0].temperature, weatherText: dailyWeatherData[0].weatherText }));
+        this.store.dispatch(new WeatherActions.UpdateDailyWeather({
+          fetchedCityIndex: 226396,
+          dailyTemperature: dailyWeatherData[0].temperature,
+          weatherText: dailyWeatherData[0].weatherText,
+          weatherIcon: dailyWeatherData[0].weatherIcon
+        }));
       })
 
     this.store.dispatch(new WeatherActions.ShowForecastSpinner());

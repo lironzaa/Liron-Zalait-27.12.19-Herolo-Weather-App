@@ -1,6 +1,7 @@
-<div class="ng-autocomplete">
+<div class="ng-autocomplete mx-auto mb-3">
   <ng-autocomplete [data]="autocompleteData" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-    (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+    (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+    [placeHolder]="placeholder" style="border-radius: 50%;">
   </ng-autocomplete>
 
   <ng-template #itemTemplate let-item>

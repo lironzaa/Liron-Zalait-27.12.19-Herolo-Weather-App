@@ -3,8 +3,10 @@ import { Weather } from '../models/weather.model';
 
 export interface State {
   fetchedCityIndex: number,
+  fetchedCityName: string,
   dailyTemperature: number,
   weatherText: string,
+  weatherIcon: number,
   isDailyLoading: boolean,
   weatherForecast: Weather[],
   isForecastLoading: boolean
@@ -16,8 +18,10 @@ export interface AppState {
 
 const initialState: State = {
   fetchedCityIndex: 215854,
+  fetchedCityName: 'Tel Aviv',
   dailyTemperature: null,
   weatherText: '',
+  weatherIcon: null,
   isDailyLoading: false,
   weatherForecast: [],
   isForecastLoading: false
@@ -31,6 +35,7 @@ export function weatherReducer(state: State = initialState, action: WeatherActio
         fetchedCityIndex: action.payload.fetchedCityIndex,
         dailyTemperature: action.payload.dailyTemperature,
         weatherText: action.payload.weatherText,
+        weatherIcon: action.payload.weatherIcon,
         isDailyLoading: false
       }
     case WeatherActions.UPDATE_FORECAST_WEATHER:
