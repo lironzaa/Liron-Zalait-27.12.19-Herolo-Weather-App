@@ -32,7 +32,6 @@ export class WeatherService {
   }
 
   getFakeDailyWeather(fetchedCityIndex) {
-    console.log(fetchedCityIndex);
     if (fetchedCityIndex === 215854) {
       return this.http.get('http://localhost:4200/assets/dailyTelAviv.json');
     }
@@ -42,7 +41,6 @@ export class WeatherService {
   }
 
   getFakeFiveDaysWeather(fetchedCityIndex) {
-    console.log(fetchedCityIndex);
     if (fetchedCityIndex === 215854) {
       return this.http.get('http://localhost:4200/assets/fiveDaysTelAviv.json');
     }

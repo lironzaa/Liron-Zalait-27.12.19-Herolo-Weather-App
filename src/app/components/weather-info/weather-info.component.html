@@ -10,7 +10,11 @@
           <h6>{{weatherText}}</h6>
         </div>
       </div>
-      <button type="button" class="btn btn-info mt-5 mb-5">Add to favorites</button>
+      <button *ngIf="!isInFavorites; else showRemoveFromFavorites" type="button" class="btn btn-info mt-5 mb-5"
+        (click)="AddToFavorites()">Add to favorites</button>
+      <ng-template #showRemoveFromFavorites>
+        <button type="button" class="btn btn-danger mt-5 mb-5" (click)="AddToFavorites()">Remove from
+          favorites</button></ng-template>
     </div>
   </div>
 </ng-container>

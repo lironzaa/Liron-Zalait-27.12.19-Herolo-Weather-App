@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WeatherService } from 'src/app/services/weather.service';
 import { map } from 'rxjs/operators';
-import { Autocomplete } from './../../models/weather.model';
 import { Store } from '@ngrx/store';
 import * as WeatherActions from './../../store/weather.actions';
 import * as fromApp from './../../store/app.reducer';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { Autocomplete } from './../../models/autocomplete.model';
 
 @Component({
   selector: 'app-weather-search',

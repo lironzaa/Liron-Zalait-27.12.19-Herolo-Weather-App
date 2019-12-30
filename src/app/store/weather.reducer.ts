@@ -1,5 +1,6 @@
 import * as WeatherActions from './weather.actions';
 import { Weather } from '../models/weather.model';
+import { Favorites } from './../models/favorites.model';
 
 export interface State {
   fetchedCityIndex: number,
@@ -9,7 +10,9 @@ export interface State {
   weatherIcon: number,
   isDailyLoading: boolean,
   weatherForecast: Weather[],
-  isForecastLoading: boolean
+  isForecastLoading: boolean,
+  favorites: [],
+  isInFavorites: boolean
 }
 
 const initialState: State = {
@@ -20,7 +23,9 @@ const initialState: State = {
   weatherIcon: null,
   isDailyLoading: false,
   weatherForecast: [],
-  isForecastLoading: false
+  isForecastLoading: false,
+  favorites: [],
+  isInFavorites: false
 }
 
 export function weatherReducer(state: State = initialState, action: WeatherActions.WeatherActions) {
@@ -60,6 +65,12 @@ export function weatherReducer(state: State = initialState, action: WeatherActio
       return {
         ...state,
         isForecastLoading: false
+      }
+    case WeatherActions.ADD_FAVORITE:
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload.fetchedCityIndex],
+        isInFavorites: true
       }
     default:
       return state;
