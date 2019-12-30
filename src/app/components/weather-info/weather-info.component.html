@@ -10,7 +10,7 @@
           <h6>{{weatherText}}</h6>
         </div>
       </div>
-      <button type="button" class="btn btn-info mt-2">Add to favorites</button>
+      <button type="button" class="btn btn-info mt-5 mb-5">Add to favorites</button>
     </div>
   </div>
 </ng-container>
@@ -22,7 +22,6 @@
     </div>
   </div>
 </ng-template>
-<button type="button" class="btn btn-primary" (click)="test()">test</button>
 <div class="card-deck" *ngIf="!isForecastLoading; else showForecastLoading">
   <app-weather-info-card class="card" *ngFor="let weatherItem of weatherForecast; index as i"
     [weatherForecast]="weatherForecast[i]">

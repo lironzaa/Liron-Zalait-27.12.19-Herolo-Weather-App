@@ -28,10 +28,6 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
     private store: Store<fromWeather.AppState>) { }
 
   ngOnInit(): void {
-    /* this.weatherService.getFiveDaysWeather()
-      .subscribe(weatherData => {
-        console.log(weatherData);
-      }) */
     this.subscription = this.store.select('weather').subscribe(
       weatherStateData => {
         this.fetchedCityIndex = weatherStateData.fetchedCityIndex;
@@ -46,9 +42,9 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(new WeatherActions.ShowDailySpinner());
     this.subscription = this.weatherService.getFakeDailyWeather(this.fetchedCityIndex)
-      .pipe(map((results: any) => {
-        console.log(results);
-        return results.map(res => ({
+      .pipe(map((dailyWeatherData: any) => {
+        console.log(dailyWeatherData);
+        return dailyWeatherData.map(res => ({
           temperature: res.Temperature.Metric.Value,
           weatherText: res.WeatherText,
           weatherIcon: res.WeatherIcon
@@ -66,25 +62,12 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(new WeatherActions.ShowForecastSpinner());
     this.subscription = this.weatherService.getFakeFiveDaysWeather(this.fetchedCityIndex)
-      .pipe(map((results: any) => {
-        return results.DailyForecasts.map(res => ({
-          temperature: res.Temperature.Minimum.Value,
-          date: res.Date
-        }))
-      }))
-      .subscribe(forecastWeatherData => {
+      .pipe(map((forecastWeatherData: any) => {
         console.log(forecastWeatherData);
-        this.store.dispatch(new WeatherActions.UpdateForecastWeather(forecastWeatherData));
-      })
-  }
-
-  test(): void {
-    this.store.dispatch(new WeatherActions.ShowForecastSpinner());
-    this.subscription = this.weatherService.getFakeFiveDaysWeather(226396)
-      .pipe(map((results: any) => {
-        return results.DailyForecasts.map(res => ({
+        return forecastWeatherData.DailyForecasts.map(res => ({
           temperature: res.Temperature.Minimum.Value,
-          date: res.Date
+          date: res.Date,
+          weatherIcon: res.Day.Icon < 10 ? (0 + (res.Day.Icon).toString()) : (res.Day.Icon).toString()
         }))
       }))
       .subscribe(forecastWeatherData => {

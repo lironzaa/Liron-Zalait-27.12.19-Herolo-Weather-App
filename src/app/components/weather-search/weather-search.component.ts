@@ -29,9 +29,9 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
   onSelectEvent(selectedQuery): void {
     this.store.dispatch(new WeatherActions.ShowDailySpinner());
     this.subscription = this.weatherService.getFakeDailyWeather(226396)
-      .pipe(map((results: any) => {
-        console.log(results);
-        return results.map(res => ({
+      .pipe(map((dailyWeatherData: any) => {
+        console.log(dailyWeatherData);
+        return dailyWeatherData.map(res => ({
           temperature: res.Temperature.Metric.Value,
           weatherText: res.WeatherText,
           weatherIcon: res.WeatherIcon
@@ -46,7 +46,6 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
           weatherIcon: dailyWeatherData[0].weatherIcon
         }));
       })
-    console.log(selectedQuery);
     /*     this.subscription = this.weatherService.getDailyWeather(selectedQuery.id)
           .pipe(map((dailyWeatherData: any) => {
             console.log(dailyWeatherData);
@@ -65,6 +64,23 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
               weatherIcon: dailyWeatherData[0].weatherIcon
             }));
           }) */
+    this.store.dispatch(new WeatherActions.ShowForecastSpinner());
+    this.subscription = this.weatherService.getFakeFiveDaysWeather(226396)
+      .pipe(map((forecastWeatherData: any) => {
+        return forecastWeatherData.DailyForecasts.map(res => ({
+          temperature: res.Temperature.Minimum.Value,
+          date: res.Date,
+          weatherIcon: res.Day.Icon < 10 ? (0 + (res.Day.Icon).toString()) : (res.Day.Icon).toString()
+        }))
+      }))
+      .subscribe(forecastWeatherData => {
+        console.log(forecastWeatherData);
+        this.store.dispatch(new WeatherActions.UpdateForecastWeather(forecastWeatherData));
+      })
+    /* this.subscription = this.weatherService.getForecastWeather()
+      .subscribe(forecastWeatherData => {
+        console.log(forecastWeatherData);
+      }) */
   }
 
   allowEnglishLettersOnKeyUp(event: any): void {
@@ -79,7 +95,6 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
   }
 
   onChangeSearch(searchedQuery: string): void {
-    console.log(searchedQuery);
     if (searchedQuery !== '') {
       /*  this.weatherService.getAutocompleteSearch(searchedQuery)
          .pipe(map((autocompleteResults: any) => {
@@ -101,10 +116,13 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
           }))
         }))
         .subscribe(autocompleteResults => {
-          console.log(autocompleteResults);
           this.autocompleteData = autocompleteResults;
         })
     }
+  }
+
+  onAutocompleteCleared() {
+    this.autocompleteData = [];
   }
 
   ngOnDestroy(): void {

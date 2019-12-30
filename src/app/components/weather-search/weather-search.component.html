@@ -1,7 +1,8 @@
 <div class="ng-autocomplete mx-auto mb-3">
   <ng-autocomplete [data]="autocompleteData" [searchKeyword]="keyword" (selected)='onSelectEvent($event)'
     (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
-    [placeHolder]="placeholder" (keypress)="allowEnglishLettersOnKeyUp($event)">
+    [placeHolder]="placeholder" (keypress)="allowEnglishLettersOnKeyUp($event)"
+    (inputCleared)="onAutocompleteCleared()">
   </ng-autocomplete>
   <h5 class="text-danger text-center" *ngIf="!isSearchValid">English letters are only allowed for searching</h5>
   <ng-template #itemTemplate let-item>

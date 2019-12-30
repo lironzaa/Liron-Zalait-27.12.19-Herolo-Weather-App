@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   weatherAPIKey: 'Y8RgWkfnkR5YW0qdYKAo37G47EibuAGA',
   apiDaily: 'http://dataservice.accuweather.com/currentconditions/v1',
-  apiFiveDays: 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/',
+  apiFiveDays: 'http://dataservice.accuweather.com/forecasts/v1/daily/5day',
   apiAutocomplete: 'http://dataservice.accuweather.com/locations/v1/cities/autocomplete',
 };
 

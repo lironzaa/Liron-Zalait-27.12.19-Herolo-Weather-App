@@ -18,12 +18,17 @@ export class WeatherService {
     return this.http.get(`${this.apiAutocomplete}?apikey=${this.weatherAPIKey}&q=${searchedQuery}`);
   }
 
-  getFakeAutocompleteSearch() {
-    return this.http.get('http://localhost:4200/assets/autocompleteT.json');
-  }
 
   getDailyWeather(fetchedCityIndex) {
     return this.http.get(`${this.apiDaily}/${fetchedCityIndex}?apikey=${this.weatherAPIKey}`);
+  }
+
+  getForecastWeather() {
+    return this.http.get(`${this.apiFiveDays}/215854?apikey=${this.weatherAPIKey}`);
+  }
+
+  getFakeAutocompleteSearch() {
+    return this.http.get('http://localhost:4200/assets/autocompleteT.json');
   }
 
   getFakeDailyWeather(fetchedCityIndex) {
@@ -34,10 +39,6 @@ export class WeatherService {
     if (fetchedCityIndex === 226396) {
       return this.http.get('http://localhost:4200/assets/dailyTokyo.json');
     }
-  }
-
-  getFiveDaysWeather() {
-    return this.http.get(`${this.apiFiveDays}/215854?apikey=${this.weatherAPIKey}`);
   }
 
   getFakeFiveDaysWeather(fetchedCityIndex) {
