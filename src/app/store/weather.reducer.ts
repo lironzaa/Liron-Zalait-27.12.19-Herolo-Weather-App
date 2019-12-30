@@ -33,6 +33,7 @@ export function weatherReducer(state: State = initialState, action: WeatherActio
       return {
         ...state,
         fetchedCityIndex: action.payload.fetchedCityIndex,
+        fetchedCityName: action.payload.fetchedCityName,
         dailyTemperature: action.payload.dailyTemperature,
         weatherText: action.payload.weatherText,
         weatherIcon: action.payload.weatherIcon,

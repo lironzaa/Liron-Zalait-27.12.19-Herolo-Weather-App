@@ -10,6 +10,7 @@ export class UpdateDailyWeather implements Action {
   readonly type = UPDATE_DAILY_WEATHER;
   constructor(public payload: {
     fetchedCityIndex: number,
+    fetchedCityName: string,
     dailyTemperature: number,
     weatherText: string,
     weatherIcon: number

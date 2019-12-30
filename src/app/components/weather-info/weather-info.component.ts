@@ -20,7 +20,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
   dailyTemperature: number;
   weatherText: string;
   weatherIcon: number;
-  isDailyLoading: boolean = false;
+  isDailyLoading: boolean = true;
   weatherForecast: Weather[];
   isForecastLoading: boolean = false;
 
@@ -28,10 +28,10 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
     private store: Store<fromWeather.AppState>) { }
 
   ngOnInit(): void {
-    /*     this.weatherService.getFiveDaysWeather()
-          .subscribe(weatherData => {
-            console.log(weatherData);
-          }) */
+    /* this.weatherService.getFiveDaysWeather()
+      .subscribe(weatherData => {
+        console.log(weatherData);
+      }) */
     this.subscription = this.store.select('weather').subscribe(
       weatherStateData => {
         this.fetchedCityIndex = weatherStateData.fetchedCityIndex;
@@ -45,7 +45,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
       })
 
     this.store.dispatch(new WeatherActions.ShowDailySpinner());
-    this.weatherService.getFakeDailyWeather(this.fetchedCityIndex)
+    this.subscription = this.weatherService.getFakeDailyWeather(this.fetchedCityIndex)
       .pipe(map((results: any) => {
         console.log(results);
         return results.map(res => ({
@@ -57,6 +57,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
       .subscribe(dailyWeatherData => {
         this.store.dispatch(new WeatherActions.UpdateDailyWeather({
           fetchedCityIndex: this.fetchedCityIndex,
+          fetchedCityName: this.fetchedCityName,
           dailyTemperature: dailyWeatherData[0].temperature,
           weatherText: dailyWeatherData[0].weatherText,
           weatherIcon: dailyWeatherData[0].weatherIcon
@@ -64,7 +65,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
       })
 
     this.store.dispatch(new WeatherActions.ShowForecastSpinner());
-    this.weatherService.getFakeFiveDaysWeather(this.fetchedCityIndex)
+    this.subscription = this.weatherService.getFakeFiveDaysWeather(this.fetchedCityIndex)
       .pipe(map((results: any) => {
         return results.DailyForecasts.map(res => ({
           temperature: res.Temperature.Minimum.Value,
@@ -78,25 +79,8 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
   }
 
   test(): void {
-    this.store.dispatch(new WeatherActions.ShowDailySpinner());
-    this.weatherService.getFakeDailyWeather(226396)
-      .pipe(map((results: any) => {
-        return results.map(res => ({
-          temperature: res.Temperature.Metric.Value,
-          weatherText: res.WeatherText
-        }))
-      }))
-      .subscribe(dailyWeatherData => {
-        this.store.dispatch(new WeatherActions.UpdateDailyWeather({
-          fetchedCityIndex: 226396,
-          dailyTemperature: dailyWeatherData[0].temperature,
-          weatherText: dailyWeatherData[0].weatherText,
-          weatherIcon: dailyWeatherData[0].weatherIcon
-        }));
-      })
-
     this.store.dispatch(new WeatherActions.ShowForecastSpinner());
-    this.weatherService.getFakeFiveDaysWeather(226396)
+    this.subscription = this.weatherService.getFakeFiveDaysWeather(226396)
       .pipe(map((results: any) => {
         return results.DailyForecasts.map(res => ({
           temperature: res.Temperature.Minimum.Value,

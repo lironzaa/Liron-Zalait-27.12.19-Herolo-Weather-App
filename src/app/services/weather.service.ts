@@ -15,7 +15,7 @@ export class WeatherService {
   constructor(private http: HttpClient) { }
 
   getAutocompleteSearch(searchedQuery) {
-    return this.http.get(`${this.apiAutocomplete}/?apikey=${this.weatherAPIKey}&q=${searchedQuery}`);
+    return this.http.get(`${this.apiAutocomplete}?apikey=${this.weatherAPIKey}&q=${searchedQuery}`);
   }
 
   getFakeAutocompleteSearch() {
