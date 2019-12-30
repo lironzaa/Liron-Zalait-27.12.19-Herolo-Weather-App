@@ -55,6 +55,16 @@ export function weatherReducer(state: State = initialState, action: WeatherActio
         ...state,
         isForecastLoading: true
       }
+    case WeatherActions.REMOVE_DAILY_SPINNER:
+      return {
+        ...state,
+        isDailyLoading: false
+      }
+    case WeatherActions.REMOVE_FORECAST_SPINNER:
+      return {
+        ...state,
+        isForecastLoading: false
+      }
     default:
       return state;
   }

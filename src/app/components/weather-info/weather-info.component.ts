@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WeatherService } from 'src/app/services/weather.service';
 import { map } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Weather } from './../../models/weather.model';
 import { Store } from '@ngrx/store';
 import * as WeatherActions from './../../store/weather.actions';
 import * as fromWeather from './../../store/weather.reducer';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-weather-info',
@@ -13,19 +14,20 @@ import * as fromWeather from './../../store/weather.reducer';
   styleUrls: ['./weather-info.component.css']
 })
 export class WeatherInfoComponent implements OnInit, OnDestroy {
-  weatherState$: Observable<fromWeather.State>;
   subscription: Subscription;
   fetchedCityIndex: number;
   fetchedCityName: string;
   dailyTemperature: number;
   weatherText: string;
   weatherIcon: number;
-  isDailyLoading: boolean = true;
+  isDailyLoading: boolean = false;
   weatherForecast: Weather[];
   isForecastLoading: boolean = false;
 
   constructor(private weatherService: WeatherService,
-    private store: Store<fromWeather.AppState>) { }
+    private store: Store<fromWeather.AppState>,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.subscription = this.store.select('weather').subscribe(
@@ -58,6 +60,9 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
           weatherText: dailyWeatherData[0].weatherText,
           weatherIcon: dailyWeatherData[0].weatherIcon
         }));
+      }, error => {
+        this.toastr.error('An error occurred, Please try again later', 'Error!');
+        this.store.dispatch(new WeatherActions.RemoveDailySpinner());
       })
 
     this.store.dispatch(new WeatherActions.ShowForecastSpinner());
@@ -73,6 +78,9 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
       .subscribe(forecastWeatherData => {
         console.log(forecastWeatherData);
         this.store.dispatch(new WeatherActions.UpdateForecastWeather(forecastWeatherData));
+      }, error => {
+        this.toastr.error('An error occurred, Please try again later', 'Error!');
+        this.store.dispatch(new WeatherActions.RemoveForecastSpinner());
       })
   }
 

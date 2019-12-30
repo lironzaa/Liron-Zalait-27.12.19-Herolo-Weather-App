@@ -6,11 +6,11 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="/">Home</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a [routerLink]="['/home']" class=" nav-link" routerLink="/">Home</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/favorites">Favorites</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a [routerLink]="['/favorites']" class="nav-link" routerLink="/favorites">Favorites</a>
       </li>
     </ul>
   </div>

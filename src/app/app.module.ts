@@ -8,6 +8,8 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { weatherReducer } from './store/weather.reducer';
 import { environment } from './../environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -34,7 +36,13 @@ import { WeatherInfoCardComponent } from './components/weather-info-card/weather
     FormsModule,
     AutocompleteLibModule,
     StoreModule.forRoot({ weather: weatherReducer }),
-    StoreDevtoolsModule.instrument({ logOnly: environment.production })
+    StoreDevtoolsModule.instrument({ logOnly: environment.production }),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: false
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

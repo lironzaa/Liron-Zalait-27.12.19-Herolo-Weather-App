@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import * as fromWeather from './../../store/weather.reducer';
 import * as WeatherActions from './../../store/weather.actions';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-weather-search',
@@ -16,6 +17,7 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
 
   constructor(private weatherService: WeatherService,
     private store: Store<fromWeather.AppState>,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void { }
@@ -45,6 +47,9 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
           weatherText: dailyWeatherData[0].weatherText,
           weatherIcon: dailyWeatherData[0].weatherIcon
         }));
+      }, error => {
+        this.toastr.error('An error occurred, Please try again later', 'Error!');
+        this.store.dispatch(new WeatherActions.RemoveDailySpinner());
       })
     /*     this.subscription = this.weatherService.getDailyWeather(selectedQuery.id)
           .pipe(map((dailyWeatherData: any) => {
@@ -65,7 +70,7 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
             }));
           }) */
     this.store.dispatch(new WeatherActions.ShowForecastSpinner());
-    this.subscription = this.weatherService.getFakeFiveDaysWeather(226396)
+    /* this.subscription = this.weatherService.getFakeFiveDaysWeather(226396)
       .pipe(map((forecastWeatherData: any) => {
         return forecastWeatherData.DailyForecasts.map(res => ({
           temperature: res.Temperature.Minimum.Value,
@@ -76,11 +81,16 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
       .subscribe(forecastWeatherData => {
         console.log(forecastWeatherData);
         this.store.dispatch(new WeatherActions.UpdateForecastWeather(forecastWeatherData));
-      })
-    /* this.subscription = this.weatherService.getForecastWeather()
+      }, error => {
+        this.toastr.error(error.message, 'An error occurred, Please try again later');
+      }) */
+    this.subscription = this.weatherService.getForecastWeather()
       .subscribe(forecastWeatherData => {
         console.log(forecastWeatherData);
-      }) */
+      }, error => {
+        this.toastr.error('An error occurred, Please try again later', 'Error!');
+        this.store.dispatch(new WeatherActions.RemoveForecastSpinner());
+      })
   }
 
   allowEnglishLettersOnKeyUp(event: any): void {
@@ -107,7 +117,9 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
          .subscribe(autocompleteResults => {
            console.log(autocompleteResults);
            this.autocompleteData = autocompleteResults;
-         }) */
+         }, error => {
+        this.toastr.error(error.message, 'An error occurred, Please try again later');
+      }) */
       this.subscription = this.weatherService.getFakeAutocompleteSearch()
         .pipe(map((results: any) => {
           return results.map(res => ({
@@ -117,6 +129,8 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
         }))
         .subscribe(autocompleteResults => {
           this.autocompleteData = autocompleteResults;
+        }, error => {
+          this.toastr.error('An error occurred, Please try again later', 'Error!');
         })
     }
   }
