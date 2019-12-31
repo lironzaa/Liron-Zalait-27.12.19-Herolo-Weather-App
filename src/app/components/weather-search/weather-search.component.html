@@ -4,7 +4,7 @@
     [placeHolder]="placeholder" (keypress)="allowEnglishLettersOnKeyUp($event)"
     (inputCleared)="onAutocompleteCleared()">
   </ng-autocomplete>
-  <h5 class="text-danger text-center" *ngIf="!isSearchValid">English letters are only allowed for searching</h5>
+  <h4 class="text-danger text-center" *ngIf="!isSearchValid">English letters are only allowed for searching</h4>
   <ng-template #itemTemplate let-item>
     <a [innerHTML]="item.name"></a>
   </ng-template>

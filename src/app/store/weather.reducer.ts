@@ -1,5 +1,5 @@
 import * as WeatherActions from './weather.actions';
-import { Weather } from '../models/weather.model';
+import { WeatherForecast } from '../models/weather.model';
 
 export interface State {
   fetchedCityIndex: number,
@@ -8,7 +8,7 @@ export interface State {
   weatherText: string,
   weatherIcon: string,
   isDailyLoading: boolean,
-  weatherForecast: Weather[],
+  weatherForecast: WeatherForecast[],
   isForecastLoading: boolean,
   favoritesList: number[],
   isInFavorites: boolean

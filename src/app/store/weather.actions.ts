@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Weather } from '../models/weather.model';
+import { WeatherForecast } from '../models/weather.model';
 
 export const UPDATE_DAILY_WEATHER = 'UPDATE_DAILY_WEATHER';
 export const SHOW_DAILY_SPINNER = 'SHOW_DAILY_SPINNER';
@@ -28,7 +28,7 @@ export class ShowDailySpinner implements Action {
 
 export class UpdateForecastWeather implements Action {
   readonly type = UPDATE_FORECAST_WEATHER;
-  constructor(public payload: { weatherForecast: Weather[] }) { }
+  constructor(public payload: { weatherForecast: WeatherForecast[] }) { }
 }
 
 export class ShowForecastSpinner implements Action {

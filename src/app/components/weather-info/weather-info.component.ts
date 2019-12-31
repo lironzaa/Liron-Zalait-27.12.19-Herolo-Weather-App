@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WeatherService } from 'src/app/services/weather.service';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { Weather } from './../../models/weather.model';
+import { WeatherForecast } from './../../models/weather.model';
 import { Store } from '@ngrx/store';
 import * as WeatherActions from './../../store/weather.actions';
 import * as fromApp from './../../store/app.reducer';
@@ -21,7 +21,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
   weatherText: string;
   weatherIcon: string;
   isDailyLoading: boolean = false;
-  weatherForecast: Weather[];
+  weatherForecast: WeatherForecast[];
   isForecastLoading: boolean = false;
   isInFavorites: boolean = false;
 
@@ -43,7 +43,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
         this.isForecastLoading = weatherStateData.isForecastLoading;
         this.isInFavorites = weatherStateData.isInFavorites;
       })
-
+    console.log(this.fetchedCityIndex);
     this.store.dispatch(new WeatherActions.CheckIsInFavorites({ fetchedCityIndex: this.fetchedCityIndex }));
 
     this.store.dispatch(new WeatherActions.ShowDailySpinner());
