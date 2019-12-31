@@ -1,17 +1,16 @@
 import * as WeatherActions from './weather.actions';
 import { Weather } from '../models/weather.model';
-import { Favorites } from './../models/favorites.model';
 
 export interface State {
   fetchedCityIndex: number,
   fetchedCityName: string,
   dailyTemperature: number,
   weatherText: string,
-  weatherIcon: number,
+  weatherIcon: string,
   isDailyLoading: boolean,
   weatherForecast: Weather[],
   isForecastLoading: boolean,
-  favorites: [],
+  favoritesList: number[],
   isInFavorites: boolean
 }
 
@@ -20,11 +19,11 @@ const initialState: State = {
   fetchedCityName: 'Tel Aviv',
   dailyTemperature: null,
   weatherText: '',
-  weatherIcon: null,
+  weatherIcon: '',
   isDailyLoading: false,
   weatherForecast: [],
   isForecastLoading: false,
-  favorites: [],
+  favoritesList: [],
   isInFavorites: false
 }
 
@@ -69,8 +68,21 @@ export function weatherReducer(state: State = initialState, action: WeatherActio
     case WeatherActions.ADD_FAVORITE:
       return {
         ...state,
-        favorites: [...state.favorites, action.payload.fetchedCityIndex],
+        favoritesList: [...state.favoritesList, action.payload.fetchedCityIndex],
         isInFavorites: true
+      }
+    case WeatherActions.REMOVE_FAVORITE:
+      return {
+        ...state,
+        favoritesList: state.favoritesList.filter(favoriteItem => {
+          return favoriteItem !== action.payload.fetchedCityIndex
+        }),
+        isInFavorites: false
+      }
+    case WeatherActions.CHECK_IS_IN_FAVORITES:
+      return {
+        ...state,
+        isInFavorites: state.favoritesList.includes(action.payload.fetchedCityIndex)
       }
     default:
       return state;

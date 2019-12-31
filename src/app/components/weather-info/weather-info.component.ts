@@ -7,7 +7,6 @@ import { Store } from '@ngrx/store';
 import * as WeatherActions from './../../store/weather.actions';
 import * as fromApp from './../../store/app.reducer';
 import { ToastrService } from 'ngx-toastr';
-import { Favorites } from './../../models/favorites.model';
 
 @Component({
   selector: 'app-weather-info',
@@ -20,11 +19,10 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
   fetchedCityName: string;
   dailyTemperature: number;
   weatherText: string;
-  weatherIcon: number;
+  weatherIcon: string;
   isDailyLoading: boolean = false;
   weatherForecast: Weather[];
   isForecastLoading: boolean = false;
-  favorites = [];
   isInFavorites: boolean = false;
 
   constructor(private weatherService: WeatherService,
@@ -43,25 +41,12 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
         this.isDailyLoading = weatherStateData.isDailyLoading;
         this.weatherForecast = weatherStateData.weatherForecast;
         this.isForecastLoading = weatherStateData.isForecastLoading;
-        this.favorites = weatherStateData.favorites;
         this.isInFavorites = weatherStateData.isInFavorites;
       })
 
-    console.log(this.fetchedCityIndex);
-    console.log(this.isInFavorites);
-    console.log(this.favorites);
-
-    if (this.favorites.includes(this.fetchedCityIndex)) {
-      console.log('includes');
-      this.isInFavorites = true;
-    } else {
-      console.log('not includes');
-      this.isInFavorites = false;
-    }
-    console.log(this.isInFavorites);
+    this.store.dispatch(new WeatherActions.CheckIsInFavorites({ fetchedCityIndex: this.fetchedCityIndex }));
 
     this.store.dispatch(new WeatherActions.ShowDailySpinner());
-    console.log(this.fetchedCityIndex);
     this.subscription = this.weatherService.getFakeDailyWeather(this.fetchedCityIndex)
       .pipe(map((dailyWeatherData: any) => {
         return dailyWeatherData.map(res => ({
@@ -102,6 +87,10 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
 
   AddToFavorites(): void {
     this.store.dispatch(new WeatherActions.AddFavorite({ fetchedCityIndex: this.fetchedCityIndex }));
+  }
+
+  removeFromFavorites(): void {
+    this.store.dispatch(new WeatherActions.RemoveFavorite({ fetchedCityIndex: this.fetchedCityIndex }));
   }
 
   ngOnDestroy(): void {

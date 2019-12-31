@@ -1,0 +1,30 @@
+[
+  {
+    "LocalObservationDateTime": "2020-01-01T05:19:00+08:00",
+    "EpochTime": 1577827140,
+    "WeatherText": "Clear",
+    "WeatherIcon": 33,
+    "HasPrecipitation": false,
+    "PrecipitationType": null,
+    "LocalSource": {
+      "Id": 7,
+      "Name": "Huafeng",
+      "WeatherCode": "00"
+    },
+    "IsDayTime": false,
+    "Temperature": {
+      "Metric": {
+        "Value": -8.9,
+        "Unit": "C",
+        "UnitType": 17
+      },
+      "Imperial": {
+        "Value": 16,
+        "Unit": "F",
+        "UnitType": 18
+      }
+    },
+    "MobileLink": "http://m.accuweather.com/en/cn/taiyuan/106770/current-weather/106770?lang=en-us",
+    "Link": "http://www.accuweather.com/en/cn/taiyuan/106770/current-weather/106770?lang=en-us"
+  }
+]

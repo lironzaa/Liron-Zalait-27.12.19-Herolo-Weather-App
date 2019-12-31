@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { WeatherService } from 'src/app/services/weather.service';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -13,14 +13,12 @@ import { Autocomplete } from './../../models/autocomplete.model';
   templateUrl: './weather-search.component.html',
   styleUrls: ['./weather-search.component.css']
 })
-export class WeatherSearchComponent implements OnInit, OnDestroy {
+export class WeatherSearchComponent implements OnDestroy {
 
   constructor(private weatherService: WeatherService,
     private store: Store<fromApp.AppState>,
     private toastr: ToastrService
   ) { }
-
-  ngOnInit(): void { }
 
   keyword: string = 'name';
   autocompleteData: Autocomplete[] = [];
@@ -29,10 +27,10 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   onSelectEvent(selectedQuery): void {
+    this.store.dispatch(new WeatherActions.CheckIsInFavorites({ fetchedCityIndex: selectedQuery.id }));
     this.store.dispatch(new WeatherActions.ShowDailySpinner());
-    this.subscription = this.weatherService.getFakeDailyWeather(226396)
+    this.subscription = this.weatherService.getFakeDailyWeather(selectedQuery.id)
       .pipe(map((dailyWeatherData: any) => {
-        console.log(dailyWeatherData);
         return dailyWeatherData.map(res => ({
           temperature: res.Temperature.Metric.Value,
           weatherText: res.WeatherText,
@@ -45,7 +43,7 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
           fetchedCityName: selectedQuery.name,
           dailyTemperature: dailyWeatherData[0].temperature,
           weatherText: dailyWeatherData[0].weatherText,
-          weatherIcon: dailyWeatherData[0].weatherIcon
+          weatherIcon: dailyWeatherData[0].weatherIcon < 10 ? (0 + (dailyWeatherData[0].weatherIcon).toString()) : (dailyWeatherData[0].weatherIcon).toString()
         }));
       }, error => {
         this.toastr.error('An error occurred, Please try again later', 'Error!');
@@ -121,8 +119,8 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
         this.toastr.error(error.message, 'An error occurred, Please try again later');
       }) */
       this.subscription = this.weatherService.getFakeAutocompleteSearch()
-        .pipe(map((results: any) => {
-          return results.map(res => ({
+        .pipe(map((autocompleteResults: any) => {
+          return autocompleteResults.map(res => ({
             id: +res.Key,
             name: res.LocalizedName
           }))

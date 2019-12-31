@@ -1,20 +1,20 @@
 [
   {
-    "LocalObservationDateTime": "2019-12-29T01:15:00+09:00",
-    "EpochTime": 1577549700,
-    "WeatherText": "Partly cloudy",
-    "WeatherIcon": 35,
+    "LocalObservationDateTime": "2020-01-01T06:35:00+09:00",
+    "EpochTime": 1577828100,
+    "WeatherText": "Mostly cloudy",
+    "WeatherIcon": 38,
     "HasPrecipitation": false,
     "PrecipitationType": null,
     "IsDayTime": false,
     "Temperature": {
       "Metric": {
-        "Value": 5.4,
+        "Value": 4.1,
         "Unit": "C",
         "UnitType": 17
       },
       "Imperial": {
-        "Value": 42,
+        "Value": 39,
         "Unit": "F",
         "UnitType": 18
       }

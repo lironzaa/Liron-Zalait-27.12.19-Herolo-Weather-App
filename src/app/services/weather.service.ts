@@ -34,13 +34,21 @@ export class WeatherService {
   getFakeDailyWeather(fetchedCityIndex) {
     if (fetchedCityIndex === 215854) {
       return this.http.get('http://localhost:4200/assets/dailyTelAviv.json');
-    }
-    if (fetchedCityIndex === 226396) {
+    } else if (fetchedCityIndex === 226396) {
       return this.http.get('http://localhost:4200/assets/dailyTokyo.json');
+    } else if (fetchedCityIndex === 106770) {
+      return this.http.get('http://localhost:4200/assets/dailyTaiyuan.json');
+    } else if (fetchedCityIndex === 106780) {
+      return this.http.get('http://localhost:4200/assets/dailyTianjin.json');
+    } else if (fetchedCityIndex === 58491) {
+      return this.http.get('http://localhost:4200/assets/dailyTongren.json');
+    } else if (fetchedCityIndex === 102324) {
+      return this.http.get('http://localhost:4200/assets/dailyTangshan.json');
     }
   }
 
   getFakeFiveDaysWeather(fetchedCityIndex) {
+    console.log(fetchedCityIndex);
     if (fetchedCityIndex === 215854) {
       return this.http.get('http://localhost:4200/assets/fiveDaysTelAviv.json');
     }

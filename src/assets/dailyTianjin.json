@@ -1,0 +1,30 @@
+[
+  {
+    "LocalObservationDateTime": "2020-01-01T05:34:00+08:00",
+    "EpochTime": 1577828040,
+    "WeatherText": "Clear",
+    "WeatherIcon": 33,
+    "HasPrecipitation": false,
+    "PrecipitationType": null,
+    "LocalSource": {
+      "Id": 7,
+      "Name": "Huafeng",
+      "WeatherCode": "00"
+    },
+    "IsDayTime": false,
+    "Temperature": {
+      "Metric": {
+        "Value": -10,
+        "Unit": "C",
+        "UnitType": 17
+      },
+      "Imperial": {
+        "Value": 14,
+        "Unit": "F",
+        "UnitType": 18
+      }
+    },
+    "MobileLink": "http://m.accuweather.com/en/cn/tianjin/106780/current-weather/106780?lang=en-us",
+    "Link": "http://www.accuweather.com/en/cn/tianjin/106780/current-weather/106780?lang=en-us"
+  }
+]

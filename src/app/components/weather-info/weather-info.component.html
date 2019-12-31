@@ -3,17 +3,17 @@
     <div class="mx-auto">
       <div class="card">
         <img class="card-img-top">
-        <div class="card-body">
+        <div class="card-body" style="min-width: 183px">
           <img src="https://developer.accuweather.com/sites/default/files/{{weatherIcon}}-s.png">
           <h5 class="card-title">{{fetchedCityName}}</h5>
           <h6 class="card-text">{{dailyTemperature}} C°</h6>
           <h6>{{weatherText}}</h6>
         </div>
       </div>
-      <button *ngIf="!isInFavorites; else showRemoveFromFavorites" type="button" class="btn btn-info mt-5 mb-5"
+      <button *ngIf="!isInFavorites; else showRemoveFromFavorites" type="button" class="btn btn-info mt-5 mb-5 btn-block"
         (click)="AddToFavorites()">Add to favorites</button>
       <ng-template #showRemoveFromFavorites>
-        <button type="button" class="btn btn-danger mt-5 mb-5" (click)="AddToFavorites()">Remove from
+        <button type="button" class="btn btn-danger mt-5 mb-5 btn-block" (click)="removeFromFavorites()">Remove from
           favorites</button></ng-template>
     </div>
   </div>
