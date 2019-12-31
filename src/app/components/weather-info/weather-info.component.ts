@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import * as WeatherActions from './../../store/weather.actions';
 import * as fromApp from './../../store/app.reducer';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from './../../../environments/environment';
 
 @Component({
   selector: 'app-weather-info',
@@ -24,6 +25,8 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
   weatherForecast: WeatherForecast[];
   isForecastLoading: boolean = false;
   isInFavorites: boolean = false;
+  private initialCityFetchedIndex = environment.initialCityFetchedIndex;
+  private initialCityFetchedName = environment.initialCityFetchedName;
 
   constructor(private weatherService: WeatherService,
     private store: Store<fromApp.AppState>,
@@ -45,44 +48,45 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
       })
     console.log(this.fetchedCityIndex);
     this.store.dispatch(new WeatherActions.CheckIsInFavorites({ fetchedCityIndex: this.fetchedCityIndex }));
-
-    this.store.dispatch(new WeatherActions.ShowDailySpinner());
-    this.subscription = this.weatherService.getFakeDailyWeather(this.fetchedCityIndex)
-      .pipe(map((dailyWeatherData: any) => {
-        return dailyWeatherData.map(res => ({
-          temperature: res.Temperature.Metric.Value,
-          weatherText: res.WeatherText,
-          weatherIcon: res.WeatherIcon
+    if (this.fetchedCityIndex === null) {
+      this.store.dispatch(new WeatherActions.ShowDailySpinner());
+      this.subscription = this.weatherService.getFakeDailyWeather(this.initialCityFetchedIndex)
+        .pipe(map((dailyWeatherData: any) => {
+          return dailyWeatherData.map(res => ({
+            temperature: res.Temperature.Metric.Value,
+            weatherText: res.WeatherText,
+            weatherIcon: res.WeatherIcon
+          }))
         }))
-      }))
-      .subscribe(dailyWeatherData => {
-        this.store.dispatch(new WeatherActions.UpdateDailyWeather({
-          fetchedCityIndex: this.fetchedCityIndex,
-          fetchedCityName: this.fetchedCityName,
-          dailyTemperature: dailyWeatherData[0].temperature,
-          weatherText: dailyWeatherData[0].weatherText,
-          weatherIcon: dailyWeatherData[0].weatherIcon
-        }));
-      }, error => {
-        this.toastr.error('An error occurred, Please try again later', 'Error!');
-        this.store.dispatch(new WeatherActions.RemoveDailySpinner());
-      })
+        .subscribe(dailyWeatherData => {
+          this.store.dispatch(new WeatherActions.UpdateDailyWeather({
+            fetchedCityIndex: this.initialCityFetchedIndex,
+            fetchedCityName: this.initialCityFetchedName,
+            dailyTemperature: dailyWeatherData[0].temperature,
+            weatherText: dailyWeatherData[0].weatherText,
+            weatherIcon: dailyWeatherData[0].weatherIcon
+          }));
+        }, error => {
+          this.toastr.error('An error occurred, Please try again later', 'Error!');
+          this.store.dispatch(new WeatherActions.RemoveDailySpinner());
+        })
 
-    this.store.dispatch(new WeatherActions.ShowForecastSpinner());
-    this.subscription = this.weatherService.getFakeFiveDaysWeather(this.fetchedCityIndex)
-      .pipe(map((forecastWeatherData: any) => {
-        return forecastWeatherData.DailyForecasts.map(res => ({
-          temperature: res.Temperature.Minimum.Value,
-          date: res.Date,
-          weatherIcon: res.Day.Icon < 10 ? (0 + (res.Day.Icon).toString()) : (res.Day.Icon).toString()
+      this.store.dispatch(new WeatherActions.ShowForecastSpinner());
+      this.subscription = this.weatherService.getFakeFiveDaysWeather(this.initialCityFetchedIndex)
+        .pipe(map((forecastWeatherData: any) => {
+          return forecastWeatherData.DailyForecasts.map(res => ({
+            temperature: res.Temperature.Minimum.Value,
+            date: res.Date,
+            weatherIcon: res.Day.Icon < 10 ? (0 + (res.Day.Icon).toString()) : (res.Day.Icon).toString()
+          }))
         }))
-      }))
-      .subscribe(forecastWeatherData => {
-        this.store.dispatch(new WeatherActions.UpdateForecastWeather(forecastWeatherData));
-      }, error => {
-        this.toastr.error('An error occurred, Please try again later', 'Error!');
-        this.store.dispatch(new WeatherActions.RemoveForecastSpinner());
-      })
+        .subscribe(forecastWeatherData => {
+          this.store.dispatch(new WeatherActions.UpdateForecastWeather(forecastWeatherData));
+        }, error => {
+          this.toastr.error('An error occurred, Please try again later', 'Error!');
+          this.store.dispatch(new WeatherActions.RemoveForecastSpinner());
+        })
+    }
   }
 
   AddToFavorites(): void {

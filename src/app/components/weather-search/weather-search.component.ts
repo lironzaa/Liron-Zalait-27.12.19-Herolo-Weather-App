@@ -68,7 +68,7 @@ export class WeatherSearchComponent implements OnDestroy {
             }));
           }) */
     this.store.dispatch(new WeatherActions.ShowForecastSpinner());
-    this.subscription = this.weatherService.getFakeFiveDaysWeather(226396)
+    this.subscription = this.weatherService.getFakeFiveDaysWeather(selectedQuery.id)
       .pipe(map((forecastWeatherData: any) => {
         return forecastWeatherData.DailyForecasts.map(res => ({
           temperature: res.Temperature.Minimum.Value,

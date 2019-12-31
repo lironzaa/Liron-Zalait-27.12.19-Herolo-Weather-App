@@ -51,9 +51,12 @@ export class WeatherService {
     console.log(fetchedCityIndex);
     if (fetchedCityIndex === 215854) {
       return this.http.get('http://localhost:4200/assets/fiveDaysTelAviv.json');
-    }
-    if (fetchedCityIndex === 226396) {
+    } else if (fetchedCityIndex === 226396) {
       return this.http.get('http://localhost:4200/assets/fiveDaysTokyo.json');
+    } else if (fetchedCityIndex === 106780) {
+      return this.http.get('http://localhost:4200/assets/fiveDaysTianjin.json');
+    } else if (fetchedCityIndex === 106770) {
+      return this.http.get('http://localhost:4200/assets/fiveDaysTaiyuan.json');
     }
   }
 }

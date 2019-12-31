@@ -15,8 +15,8 @@ export interface State {
 }
 
 const initialState: State = {
-  fetchedCityIndex: 215854,
-  fetchedCityName: 'Tel Aviv',
+  fetchedCityIndex: null,
+  fetchedCityName: '',
   dailyTemperature: null,
   weatherText: '',
   weatherIcon: '',
