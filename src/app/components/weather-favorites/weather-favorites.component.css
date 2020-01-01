@@ -3,3 +3,7 @@
   background-image:url('./../../../assets/images/background.jpg');
   background-position:50% 50%;
 }
+
+.custom-margin-left{
+  margin-left: 80px;
+}

@@ -94,7 +94,8 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
       id: this.fetchedCityIndex,
       weatherText: this.weatherText,
       temperature: this.dailyTemperature,
-      weatherIcon: this.weatherIcon
+      weatherIcon: this.weatherIcon,
+      cityName: this.fetchedCityName
     }));
   }
 

@@ -49,7 +49,8 @@ export class AddFavorite implements Action {
     id: number,
     weatherText: string,
     temperature: number,
-    weatherIcon: string
+    weatherIcon: string,
+    cityName: string
   }) { }
 }
 

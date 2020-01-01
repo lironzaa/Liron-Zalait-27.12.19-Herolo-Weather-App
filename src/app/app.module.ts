@@ -18,6 +18,7 @@ import { WeatherFavoritesComponent } from './components/weather-favorites/weathe
 import { WeatherSearchComponent } from './components/weather-search/weather-search.component';
 import { WeatherInfoComponent } from './components/weather-info/weather-info.component';
 import { WeatherInfoCardComponent } from './components/weather-info-card/weather-info-card.component';
+import { WeatherFavoriteInfoCardComponent } from './components/weather-favorite-info-card/weather-favorite-info-card.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { WeatherInfoCardComponent } from './components/weather-info-card/weather
     WeatherFavoritesComponent,
     WeatherSearchComponent,
     WeatherInfoComponent,
-    WeatherInfoCardComponent
+    WeatherInfoCardComponent,
+    WeatherFavoriteInfoCardComponent
   ],
   imports: [
     BrowserModule,
