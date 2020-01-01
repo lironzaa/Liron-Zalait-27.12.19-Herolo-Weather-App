@@ -77,7 +77,6 @@ export class WeatherSearchComponent implements OnDestroy {
         }))
       }))
       .subscribe(forecastWeatherData => {
-        console.log(forecastWeatherData);
         this.store.dispatch(new WeatherActions.UpdateForecastWeather(forecastWeatherData));
       }, error => {
         this.toastr.error(error.message, 'An error occurred, Please try again later');

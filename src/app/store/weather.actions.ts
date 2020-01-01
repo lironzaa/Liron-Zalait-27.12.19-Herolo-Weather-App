@@ -45,7 +45,12 @@ export class RemoveForecastSpinner implements Action {
 
 export class AddFavorite implements Action {
   readonly type = ADD_FAVORITE;
-  constructor(public payload: { fetchedCityIndex: number }) { }
+  constructor(public payload: {
+    id: number,
+    weatherText: string,
+    temperature: number,
+    weatherIcon: string
+  }) { }
 }
 
 export class RemoveFavorite implements Action {

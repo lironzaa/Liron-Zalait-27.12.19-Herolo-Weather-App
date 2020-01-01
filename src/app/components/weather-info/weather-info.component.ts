@@ -90,7 +90,12 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
   }
 
   AddToFavorites(): void {
-    this.store.dispatch(new WeatherActions.AddFavorite({ fetchedCityIndex: this.fetchedCityIndex }));
+    this.store.dispatch(new WeatherActions.AddFavorite({
+      id: this.fetchedCityIndex,
+      weatherText: this.weatherText,
+      temperature: this.dailyTemperature,
+      weatherIcon: this.weatherIcon
+    }));
   }
 
   removeFromFavorites(): void {
