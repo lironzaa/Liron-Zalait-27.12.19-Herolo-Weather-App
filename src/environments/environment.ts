@@ -8,8 +8,7 @@ export const environment = {
   apiDaily: 'http://dataservice.accuweather.com/currentconditions/v1',
   apiFiveDays: 'http://dataservice.accuweather.com/forecasts/v1/daily/5day',
   apiAutocomplete: 'http://dataservice.accuweather.com/locations/v1/cities/autocomplete',
-  initialCityFetchedIndex: 215854,
-  initialCityFetchedName: 'Tel Aviv',
+  apiGeoLocation: 'http://dataservice.accuweather.com/locations/v1/cities/geoposition/search',
 };
 
 /*

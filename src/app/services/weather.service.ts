@@ -11,6 +11,7 @@ export class WeatherService {
   private apiDaily = environment.apiDaily;
   private apiAutocomplete = environment.apiAutocomplete;
   private apiFiveDays = environment.apiFiveDays;
+  private apiGeoLocation = environment.apiGeoLocation;
 
   constructor(private http: HttpClient) { }
 
@@ -27,8 +28,16 @@ export class WeatherService {
     return this.http.get(`${this.apiFiveDays}/215854?apikey=${this.weatherAPIKey}`);
   }
 
+  getGeolocation(latitude, longitude) {
+    return this.http.get(`${this.apiGeoLocation}?apikey=${this.weatherAPIKey}&q=${latitude},${longitude}&toplevel=true`);
+  }
+
   getFakeAutocompleteSearch() {
     return this.http.get('http://localhost:4200/assets/autocompleteT.json');
+  }
+
+  getFakeGeolocation(latitude, longitude) {
+    return this.http.get('http://localhost:4200/assets/geoLocation.json');
   }
 
   getFakeDailyWeather(fetchedCityIndex) {

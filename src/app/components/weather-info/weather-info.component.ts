@@ -7,7 +7,6 @@ import { Store } from '@ngrx/store';
 import * as WeatherActions from './../../store/weather.actions';
 import * as fromApp from './../../store/app.reducer';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from './../../../environments/environment';
 import { fade } from './../../animations/animations';
 
 @Component({
@@ -29,8 +28,8 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
   currentWeatherForecast: WeatherForecast[];
   isForecastLoading: boolean = false;
   isInFavorites: boolean = false;
-  private initialCityFetchedIndex = environment.initialCityFetchedIndex;
-  private initialCityFetchedName = environment.initialCityFetchedName;
+  initialCityFetchedIndex: number;
+  initialCityFetchedName: string;
 
   constructor(private weatherService: WeatherService,
     private store: Store<fromApp.AppState>,
@@ -53,38 +52,51 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
     this.store.dispatch(new WeatherActions.CheckIsInFavorites({ fetchedCityIndex: this.fetchedCityIndex }));
     if (this.fetchedCityIndex === null) {
       this.store.dispatch(new WeatherActions.ShowDailySpinner());
-      this.subscription = this.weatherService.getFakeDailyWeather(this.initialCityFetchedIndex)
-        .pipe(map((dailyWeatherData: any) => {
-          return dailyWeatherData.map(res => ({
-            fetchedCityIndex: this.initialCityFetchedIndex,
-            fetchedCityName: this.initialCityFetchedName,
-            dailyTemperature: res.Temperature.Metric.Value,
-            weatherText: res.WeatherText,
-            weatherIcon: res.WeatherIcon < 10 ? (0 + (res.WeatherIcon).toString()) : (res.WeatherIcon).toString()
-          }))
-        }))
-        .subscribe(dailyWeatherData => {
-          this.store.dispatch(new WeatherActions.UpdateDailyWeather(dailyWeatherData[0]));
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          this.subscription = this.weatherService.getFakeGeolocation(latitude, longitude).subscribe((geoLocationData: any) => {
+            this.initialCityFetchedIndex = +geoLocationData.Key;
+            this.initialCityFetchedName = geoLocationData.EnglishName;
+            this.subscription = this.weatherService.getFakeDailyWeather(this.initialCityFetchedIndex)
+              .pipe(map((dailyWeatherData: any) => {
+                return dailyWeatherData.map(res => ({
+                  fetchedCityIndex: this.initialCityFetchedIndex,
+                  fetchedCityName: this.initialCityFetchedName,
+                  dailyTemperature: res.Temperature.Metric.Value,
+                  weatherText: res.WeatherText,
+                  weatherIcon: res.WeatherIcon < 10 ? (0 + (res.WeatherIcon).toString()) : (res.WeatherIcon).toString()
+                }))
+              }))
+              .subscribe(dailyWeatherData => {
+                this.store.dispatch(new WeatherActions.UpdateDailyWeather(dailyWeatherData[0]));
+              }, error => {
+                this.toastr.error('An error occurred, Please try again later', 'Error!');
+                this.store.dispatch(new WeatherActions.RemoveDailySpinner());
+              })
+            this.store.dispatch(new WeatherActions.ShowForecastSpinner());
+            this.subscription = this.weatherService.getFakeFiveDaysWeather(this.initialCityFetchedIndex)
+              .pipe(map((forecastWeatherData: any) => {
+                return forecastWeatherData.DailyForecasts.map(res => ({
+                  temperature: res.Temperature.Minimum.Value,
+                  date: res.Date,
+                  weatherIcon: res.Day.Icon < 10 ? (0 + (res.Day.Icon).toString()) : (res.Day.Icon).toString()
+                }))
+              }))
+              .subscribe(forecastWeatherData => {
+                this.store.dispatch(new WeatherActions.UpdateForecastWeather(forecastWeatherData));
+              }, error => {
+                this.toastr.error('An error occurred, Please try again later', 'Error!');
+                this.store.dispatch(new WeatherActions.RemoveForecastSpinner());
+              })
+          })
         }, error => {
-          this.toastr.error('An error occurred, Please try again later', 'Error!');
-          this.store.dispatch(new WeatherActions.RemoveDailySpinner());
-        })
-
-      this.store.dispatch(new WeatherActions.ShowForecastSpinner());
-      this.subscription = this.weatherService.getFakeFiveDaysWeather(this.initialCityFetchedIndex)
-        .pipe(map((forecastWeatherData: any) => {
-          return forecastWeatherData.DailyForecasts.map(res => ({
-            temperature: res.Temperature.Minimum.Value,
-            date: res.Date,
-            weatherIcon: res.Day.Icon < 10 ? (0 + (res.Day.Icon).toString()) : (res.Day.Icon).toString()
-          }))
-        }))
-        .subscribe(forecastWeatherData => {
-          this.store.dispatch(new WeatherActions.UpdateForecastWeather(forecastWeatherData));
-        }, error => {
-          this.toastr.error('An error occurred, Please try again later', 'Error!');
-          this.store.dispatch(new WeatherActions.RemoveForecastSpinner());
-        })
+          this.toastr.error('Please accept geolocation in order to let the app set your default location', 'Error!');
+        });
+      } else {
+        this.toastr.error('No support for geolocation', 'Error!');
+      }
     }
   }
 
