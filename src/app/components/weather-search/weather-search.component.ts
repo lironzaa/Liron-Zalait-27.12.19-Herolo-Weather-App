@@ -32,19 +32,15 @@ export class WeatherSearchComponent implements OnDestroy {
     this.subscription = this.weatherService.getFakeDailyWeather(selectedQuery.id)
       .pipe(map((dailyWeatherData: any) => {
         return dailyWeatherData.map(res => ({
-          temperature: res.Temperature.Metric.Value,
+          fetchedCityIndex: selectedQuery.id,
+          fetchedCityName: selectedQuery.name,
+          dailyTemperature: res.Temperature.Metric.Value,
           weatherText: res.WeatherText,
           weatherIcon: res.WeatherIcon
         }))
       }))
       .subscribe(dailyWeatherData => {
-        this.store.dispatch(new WeatherActions.UpdateDailyWeather({
-          fetchedCityIndex: selectedQuery.id,
-          fetchedCityName: selectedQuery.name,
-          dailyTemperature: dailyWeatherData[0].temperature,
-          weatherText: dailyWeatherData[0].weatherText,
-          weatherIcon: dailyWeatherData[0].weatherIcon < 10 ? (0 + (dailyWeatherData[0].weatherIcon).toString()) : (dailyWeatherData[0].weatherIcon).toString()
-        }));
+        this.store.dispatch(new WeatherActions.UpdateDailyWeather(dailyWeatherData[0]));
       }, error => {
         this.toastr.error('An error occurred, Please try again later', 'Error!');
         this.store.dispatch(new WeatherActions.RemoveDailySpinner());

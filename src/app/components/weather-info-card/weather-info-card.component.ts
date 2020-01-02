@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./weather-info-card.component.css']
 })
 export class WeatherInfoCardComponent {
-  @Input() weatherForecast;
+  @Input() currentWeatherForecast;
 
   constructor() { }
 

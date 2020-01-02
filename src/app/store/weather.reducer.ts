@@ -1,14 +1,10 @@
 import * as WeatherActions from './weather.actions';
-import { WeatherForecast } from '../models/weather.model';
+import { WeatherForecast, DailyWeather } from '../models/weather.model';
 
 export interface State {
-  fetchedCityIndex: number,
-  fetchedCityName: string,
-  dailyTemperature: number,
-  weatherText: string,
-  weatherIcon: string,
+  currentDailyWeather: DailyWeather,
   isDailyLoading: boolean,
-  weatherForecast: WeatherForecast[],
+  currentWeatherForecast: WeatherForecast[],
   isForecastLoading: boolean,
   favoritesList: number[],
   isInFavorites: boolean,
@@ -16,13 +12,15 @@ export interface State {
 }
 
 const initialState: State = {
-  fetchedCityIndex: null,
-  fetchedCityName: '',
-  dailyTemperature: null,
-  weatherText: '',
-  weatherIcon: '',
+  currentDailyWeather: {
+    fetchedCityIndex: null,
+    fetchedCityName: '',
+    dailyTemperature: null,
+    weatherText: '',
+    weatherIcon: ''
+  },
   isDailyLoading: false,
-  weatherForecast: [],
+  currentWeatherForecast: [],
   isForecastLoading: false,
   favoritesList: [],
   isInFavorites: false,
@@ -34,17 +32,13 @@ export function weatherReducer(state: State = initialState, action: WeatherActio
     case WeatherActions.UPDATE_DAILY_WEATHER:
       return {
         ...state,
-        fetchedCityIndex: action.payload.fetchedCityIndex,
-        fetchedCityName: action.payload.fetchedCityName,
-        dailyTemperature: action.payload.dailyTemperature,
-        weatherText: action.payload.weatherText,
-        weatherIcon: action.payload.weatherIcon,
+        currentDailyWeather: action.payload,
         isDailyLoading: false
       }
     case WeatherActions.UPDATE_FORECAST_WEATHER:
       return {
         ...state,
-        weatherForecast: action.payload,
+        currentWeatherForecast: action.payload,
         isForecastLoading: false
       }
     case WeatherActions.SHOW_DAILY_SPINNER:

@@ -22,7 +22,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
   weatherText: string;
   weatherIcon: string;
   isDailyLoading: boolean = false;
-  weatherForecast: WeatherForecast[];
+  currentWeatherForecast: WeatherForecast[];
   isForecastLoading: boolean = false;
   isInFavorites: boolean = false;
   private initialCityFetchedIndex = environment.initialCityFetchedIndex;
@@ -36,13 +36,13 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.store.select('weather').subscribe(
       weatherStateData => {
-        this.fetchedCityIndex = weatherStateData.fetchedCityIndex;
-        this.fetchedCityName = weatherStateData.fetchedCityName;
-        this.dailyTemperature = weatherStateData.dailyTemperature;
-        this.weatherText = weatherStateData.weatherText;
-        this.weatherIcon = weatherStateData.weatherIcon;
+        this.fetchedCityIndex = weatherStateData.currentDailyWeather.fetchedCityIndex;
+        this.fetchedCityName = weatherStateData.currentDailyWeather.fetchedCityName;
+        this.dailyTemperature = weatherStateData.currentDailyWeather.dailyTemperature;
+        this.weatherText = weatherStateData.currentDailyWeather.weatherText;
+        this.weatherIcon = weatherStateData.currentDailyWeather.weatherIcon;
         this.isDailyLoading = weatherStateData.isDailyLoading;
-        this.weatherForecast = weatherStateData.weatherForecast;
+        this.currentWeatherForecast = weatherStateData.currentWeatherForecast;
         this.isForecastLoading = weatherStateData.isForecastLoading;
         this.isInFavorites = weatherStateData.isInFavorites;
       })
@@ -53,19 +53,15 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
       this.subscription = this.weatherService.getFakeDailyWeather(this.initialCityFetchedIndex)
         .pipe(map((dailyWeatherData: any) => {
           return dailyWeatherData.map(res => ({
-            temperature: res.Temperature.Metric.Value,
+            fetchedCityIndex: this.initialCityFetchedIndex,
+            fetchedCityName: this.initialCityFetchedName,
+            dailyTemperature: res.Temperature.Metric.Value,
             weatherText: res.WeatherText,
             weatherIcon: res.WeatherIcon
           }))
         }))
         .subscribe(dailyWeatherData => {
-          this.store.dispatch(new WeatherActions.UpdateDailyWeather({
-            fetchedCityIndex: this.initialCityFetchedIndex,
-            fetchedCityName: this.initialCityFetchedName,
-            dailyTemperature: dailyWeatherData[0].temperature,
-            weatherText: dailyWeatherData[0].weatherText,
-            weatherIcon: dailyWeatherData[0].weatherIcon
-          }));
+          this.store.dispatch(new WeatherActions.UpdateDailyWeather(dailyWeatherData[0]));
         }, error => {
           this.toastr.error('An error occurred, Please try again later', 'Error!');
           this.store.dispatch(new WeatherActions.RemoveDailySpinner());

@@ -26,8 +26,8 @@
   </div>
 </ng-template>
 <div class="card-deck" *ngIf="!isForecastLoading; else showForecastLoading">
-  <app-weather-info-card class="card" *ngFor="let weatherItem of weatherForecast; index as i"
-    [weatherForecast]="weatherForecast[i]">
+  <app-weather-info-card class="card" *ngFor="let weatherItem of currentWeatherForecast; index as i"
+    [currentWeatherForecast]="currentWeatherForecast[i]">
   </app-weather-info-card>
 </div>
 <ng-template #showForecastLoading>

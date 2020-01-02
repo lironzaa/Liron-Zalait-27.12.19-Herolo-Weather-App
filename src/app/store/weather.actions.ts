@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { WeatherForecast } from '../models/weather.model';
+import { WeatherForecast, DailyWeather } from '../models/weather.model';
 
 export const UPDATE_DAILY_WEATHER = 'UPDATE_DAILY_WEATHER';
 export const SHOW_DAILY_SPINNER = 'SHOW_DAILY_SPINNER';
@@ -13,13 +13,9 @@ export const CHECK_IS_IN_FAVORITES = 'CHECK_IS_IN_FAVORITES';
 
 export class UpdateDailyWeather implements Action {
   readonly type = UPDATE_DAILY_WEATHER;
-  constructor(public payload: {
-    fetchedCityIndex: number,
-    fetchedCityName: string,
-    dailyTemperature: number,
-    weatherText: string,
-    weatherIcon: string
-  }) { }
+  constructor(public payload: { currentDailyWeather: DailyWeather }) {
+    console.log(payload);
+  }
 }
 
 export class ShowDailySpinner implements Action {
@@ -28,7 +24,7 @@ export class ShowDailySpinner implements Action {
 
 export class UpdateForecastWeather implements Action {
   readonly type = UPDATE_FORECAST_WEATHER;
-  constructor(public payload: { weatherForecast: WeatherForecast[] }) { }
+  constructor(public payload: { currentWeatherForecast: WeatherForecast[] }) { }
 }
 
 export class ShowForecastSpinner implements Action {
