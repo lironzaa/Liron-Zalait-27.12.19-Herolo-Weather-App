@@ -10,6 +10,7 @@ import { environment } from './../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import * as fromApp from './store/app.reducer';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -44,7 +45,8 @@ import { WeatherFavoriteInfoCardComponent } from './components/weather-favorite-
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: false
-    })
+    }),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

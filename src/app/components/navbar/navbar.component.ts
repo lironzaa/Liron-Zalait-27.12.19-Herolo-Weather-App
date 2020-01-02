@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
+  isShown: boolean = false;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  test() {
+    console.log('test');
+    console.log(this.isShown);
   }
 
 }
