@@ -56,10 +56,10 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
         navigator.geolocation.getCurrentPosition((position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-          this.subscription = this.weatherService.getFakeGeolocation(latitude, longitude).subscribe((geoLocationData: any) => {
+          this.subscription = this.weatherService.getGeolocation(latitude, longitude).subscribe((geoLocationData: any) => {
             this.initialCityFetchedIndex = +geoLocationData.Key;
             this.initialCityFetchedName = geoLocationData.EnglishName;
-            this.subscription = this.weatherService.getFakeDailyWeather(this.initialCityFetchedIndex)
+            this.subscription = this.weatherService.getDailyWeather(this.initialCityFetchedIndex)
               .pipe(map((dailyWeatherData: any) => {
                 return dailyWeatherData.map(res => ({
                   fetchedCityIndex: this.initialCityFetchedIndex,
@@ -76,7 +76,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
                 this.store.dispatch(new WeatherActions.RemoveDailySpinner());
               })
             this.store.dispatch(new WeatherActions.ShowForecastSpinner());
-            this.subscription = this.weatherService.getFakeFiveDaysWeather(this.initialCityFetchedIndex)
+            this.subscription = this.weatherService.getForecastWeather(this.initialCityFetchedIndex)
               .pipe(map((forecastWeatherData: any) => {
                 return forecastWeatherData.DailyForecasts.map(res => ({
                   temperature: res.Temperature.Minimum.Value,
