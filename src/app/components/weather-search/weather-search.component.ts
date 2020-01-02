@@ -31,12 +31,13 @@ export class WeatherSearchComponent implements OnDestroy {
     this.store.dispatch(new WeatherActions.ShowDailySpinner());
     this.subscription = this.weatherService.getFakeDailyWeather(selectedQuery.id)
       .pipe(map((dailyWeatherData: any) => {
+        console.log(dailyWeatherData);
         return dailyWeatherData.map(res => ({
           fetchedCityIndex: selectedQuery.id,
           fetchedCityName: selectedQuery.name,
           dailyTemperature: res.Temperature.Metric.Value,
           weatherText: res.WeatherText,
-          weatherIcon: res.WeatherIcon
+          weatherIcon: res.WeatherIcon < 10 ? (0 + (res.WeatherIcon).toString()) : (res.WeatherIcon).toString()
         }))
       }))
       .subscribe(dailyWeatherData => {

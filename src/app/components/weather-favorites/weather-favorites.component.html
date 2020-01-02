@@ -1,8 +1,9 @@
 <div class="container-fluid image">
   <div class="row">
-    <ng-container *ngIf="favoritesWeather.length>0; else showNoFavorites">
-      <app-weather-favorite-info-card class="col-2 card custom-margin-left mr-5 mt-5"
-        *ngFor="let weatherItem of favoritesWeather; index as i" [favoritesWeather]="favoritesWeather[i]">
+    <ng-container *ngIf="favoritesDailyWeather.length>0; else showNoFavorites">
+      <app-weather-favorite-info-card class="col-lg-2 col-md-6 col-sm-10 card custom-margin-left mr-5 mt-5"
+        *ngFor="let weatherItem of favoritesDailyWeather; index as i"
+        [favoritesDailyWeather]="favoritesDailyWeather[i]">
       </app-weather-favorite-info-card>
     </ng-container>
     <ng-template #showNoFavorites>

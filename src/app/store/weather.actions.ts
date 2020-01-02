@@ -10,12 +10,11 @@ export const REMOVE_FORECAST_SPINNER = 'REMOVE_FORECAST_SPINNER';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
 export const CHECK_IS_IN_FAVORITES = 'CHECK_IS_IN_FAVORITES';
+export const LOAD_WEATHER_FROM_FAVORITES = 'LOAD_WEATHER_FROM_FAVORITES';
 
 export class UpdateDailyWeather implements Action {
   readonly type = UPDATE_DAILY_WEATHER;
-  constructor(public payload: { currentDailyWeather: DailyWeather }) {
-    console.log(payload);
-  }
+  constructor(public payload: { currentDailyWeather: DailyWeather }) { }
 }
 
 export class ShowDailySpinner implements Action {
@@ -42,11 +41,14 @@ export class RemoveForecastSpinner implements Action {
 export class AddFavorite implements Action {
   readonly type = ADD_FAVORITE;
   constructor(public payload: {
-    id: number,
-    weatherText: string,
-    temperature: number,
-    weatherIcon: string,
-    cityName: string
+    favoritesDailyWeather: {
+      fetchedCityIndex: number,
+      weatherText: string,
+      dailyTemperature: number,
+      weatherIcon: string,
+      fetchedCityName: string
+    },
+    currentWeatherForecast: WeatherForecast[]
   }) { }
 }
 
@@ -60,6 +62,11 @@ export class CheckIsInFavorites implements Action {
   constructor(public payload: { fetchedCityIndex: number }) { }
 }
 
+export class LoadWeatherFromFavorites implements Action {
+  readonly type = LOAD_WEATHER_FROM_FAVORITES;
+  constructor(public payload: { fetchedCityIndex: number }) { }
+}
+
 export type WeatherActions =
   UpdateDailyWeather |
   ShowDailySpinner |
@@ -69,4 +76,5 @@ export type WeatherActions =
   RemoveForecastSpinner |
   AddFavorite |
   RemoveFavorite |
-  CheckIsInFavorites;
+  CheckIsInFavorites |
+  LoadWeatherFromFavorites;

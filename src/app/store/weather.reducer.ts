@@ -8,7 +8,8 @@ export interface State {
   isForecastLoading: boolean,
   favoritesList: number[],
   isInFavorites: boolean,
-  favoritesWeather: []
+  favoritesDailyWeather: DailyWeather[],
+  favoritesForecastWeather: [],
 }
 
 const initialState: State = {
@@ -24,7 +25,8 @@ const initialState: State = {
   isForecastLoading: false,
   favoritesList: [],
   isInFavorites: false,
-  favoritesWeather: []
+  favoritesDailyWeather: [],
+  favoritesForecastWeather: []
 }
 
 export function weatherReducer(state: State = initialState, action: WeatherActions.WeatherActions) {
@@ -64,9 +66,10 @@ export function weatherReducer(state: State = initialState, action: WeatherActio
     case WeatherActions.ADD_FAVORITE:
       return {
         ...state,
-        favoritesList: [...state.favoritesList, action.payload.id],
+        favoritesList: [...state.favoritesList, action.payload.favoritesDailyWeather.fetchedCityIndex],
         isInFavorites: true,
-        favoritesWeather: [...state.favoritesWeather, action.payload]
+        favoritesDailyWeather: [...state.favoritesDailyWeather, action.payload.favoritesDailyWeather],
+        favoritesForecastWeather: [...state.favoritesForecastWeather, action.payload.currentWeatherForecast]
       }
     case WeatherActions.REMOVE_FAVORITE:
       return {
@@ -75,14 +78,22 @@ export function weatherReducer(state: State = initialState, action: WeatherActio
           return favoriteItem !== action.payload.fetchedCityIndex
         }),
         isInFavorites: false,
-        favoritesWeather: state.favoritesWeather.filter((favoriteWeatherItem: any) => {
-          return favoriteWeatherItem.id !== action.payload.fetchedCityIndex
+        favoritesDailyWeather: state.favoritesDailyWeather.filter((favoriteWeatherItem: any) => {
+          return favoriteWeatherItem.fetchedCityIndex !== action.payload.fetchedCityIndex
         })
       }
     case WeatherActions.CHECK_IS_IN_FAVORITES:
       return {
         ...state,
         isInFavorites: state.favoritesList.includes(action.payload.fetchedCityIndex)
+      }
+    case WeatherActions.LOAD_WEATHER_FROM_FAVORITES:
+      console.log(state.currentWeatherForecast);
+      console.log(state.favoritesForecastWeather);
+      return {
+        ...state,
+        currentDailyWeather: state.favoritesDailyWeather[action.payload.fetchedCityIndex],
+        currentWeatherForecast: state.favoritesForecastWeather[action.payload.fetchedCityIndex]
       }
     default:
       return state;

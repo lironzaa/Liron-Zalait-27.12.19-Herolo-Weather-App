@@ -46,7 +46,6 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
         this.isForecastLoading = weatherStateData.isForecastLoading;
         this.isInFavorites = weatherStateData.isInFavorites;
       })
-    console.log(this.fetchedCityIndex);
     this.store.dispatch(new WeatherActions.CheckIsInFavorites({ fetchedCityIndex: this.fetchedCityIndex }));
     if (this.fetchedCityIndex === null) {
       this.store.dispatch(new WeatherActions.ShowDailySpinner());
@@ -57,7 +56,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
             fetchedCityName: this.initialCityFetchedName,
             dailyTemperature: res.Temperature.Metric.Value,
             weatherText: res.WeatherText,
-            weatherIcon: res.WeatherIcon
+            weatherIcon: res.WeatherIcon < 10 ? (0 + (res.WeatherIcon).toString()) : (res.WeatherIcon).toString()
           }))
         }))
         .subscribe(dailyWeatherData => {
@@ -87,11 +86,14 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
 
   AddToFavorites(): void {
     this.store.dispatch(new WeatherActions.AddFavorite({
-      id: this.fetchedCityIndex,
-      weatherText: this.weatherText,
-      temperature: this.dailyTemperature,
-      weatherIcon: this.weatherIcon,
-      cityName: this.fetchedCityName
+      favoritesDailyWeather: {
+        fetchedCityIndex: this.fetchedCityIndex,
+        weatherText: this.weatherText,
+        dailyTemperature: this.dailyTemperature,
+        weatherIcon: this.weatherIcon,
+        fetchedCityName: this.fetchedCityName
+      },
+      currentWeatherForecast: this.currentWeatherForecast
     }));
   }
 
