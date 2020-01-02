@@ -9,7 +9,7 @@ export interface State {
   favoritesList: number[],
   isInFavorites: boolean,
   favoritesDailyWeather: DailyWeather[],
-  favoritesForecastWeather: [],
+  favoritesForecastWeather: WeatherForecast[],
 }
 
 const initialState: State = {
@@ -80,6 +80,9 @@ export function weatherReducer(state: State = initialState, action: WeatherActio
         isInFavorites: false,
         favoritesDailyWeather: state.favoritesDailyWeather.filter((favoriteWeatherItem: any) => {
           return favoriteWeatherItem.fetchedCityIndex !== action.payload.fetchedCityIndex
+        }),
+        favoritesForecastWeather: state.favoritesForecastWeather.filter((favoriteWeatherItem, index) => {
+          return index !== state.favoritesList.indexOf(action.payload.fetchedCityIndex)
         })
       }
     case WeatherActions.CHECK_IS_IN_FAVORITES:
@@ -88,8 +91,6 @@ export function weatherReducer(state: State = initialState, action: WeatherActio
         isInFavorites: state.favoritesList.includes(action.payload.fetchedCityIndex)
       }
     case WeatherActions.LOAD_WEATHER_FROM_FAVORITES:
-      console.log(state.currentWeatherForecast);
-      console.log(state.favoritesForecastWeather);
       return {
         ...state,
         currentDailyWeather: state.favoritesDailyWeather[action.payload.fetchedCityIndex],

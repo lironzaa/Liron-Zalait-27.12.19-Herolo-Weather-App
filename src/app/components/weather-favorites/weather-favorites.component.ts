@@ -14,7 +14,7 @@ export class WeatherFavoritesComponent implements OnInit, OnDestroy {
   favoritesDailyWeather: DailyWeather[] = [];
   constructor(private store: Store<fromApp.AppState>) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscription = this.store.select('weather').subscribe(
       weatherStateData => {
         this.favoritesDailyWeather = weatherStateData.favoritesDailyWeather;

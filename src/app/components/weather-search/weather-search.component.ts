@@ -31,7 +31,6 @@ export class WeatherSearchComponent implements OnDestroy {
     this.store.dispatch(new WeatherActions.ShowDailySpinner());
     this.subscription = this.weatherService.getFakeDailyWeather(selectedQuery.id)
       .pipe(map((dailyWeatherData: any) => {
-        console.log(dailyWeatherData);
         return dailyWeatherData.map(res => ({
           fetchedCityIndex: selectedQuery.id,
           fetchedCityName: selectedQuery.name,
@@ -48,7 +47,6 @@ export class WeatherSearchComponent implements OnDestroy {
       })
     /*     this.subscription = this.weatherService.getDailyWeather(selectedQuery.id)
           .pipe(map((dailyWeatherData: any) => {
-            console.log(dailyWeatherData);
             return dailyWeatherData.map(res => ({
               temperature: res.Temperature.Metric.Value,
               weatherText: res.WeatherText,
@@ -80,7 +78,6 @@ export class WeatherSearchComponent implements OnDestroy {
       })
     /* this.subscription = this.weatherService.getForecastWeather()
       .subscribe(forecastWeatherData => {
-        console.log(forecastWeatherData);
       }, error => {
         this.toastr.error('An error occurred, Please try again later', 'Error!');
         this.store.dispatch(new WeatherActions.RemoveForecastSpinner());
@@ -102,14 +99,12 @@ export class WeatherSearchComponent implements OnDestroy {
     if (searchedQuery !== '') {
       /*  this.weatherService.getAutocompleteSearch(searchedQuery)
          .pipe(map((autocompleteResults: any) => {
-           console.log(autocompleteResults);
            return autocompleteResults.map(res => ({
              id: +res.Key,
              name: res.LocalizedName
            }))
          }))
          .subscribe(autocompleteResults => {
-           console.log(autocompleteResults);
            this.autocompleteData = autocompleteResults;
          }, error => {
         this.toastr.error(error.message, 'An error occurred, Please try again later');
@@ -129,7 +124,7 @@ export class WeatherSearchComponent implements OnDestroy {
     }
   }
 
-  onAutocompleteCleared() {
+  onAutocompleteCleared(): void {
     this.autocompleteData = [];
   }
 
