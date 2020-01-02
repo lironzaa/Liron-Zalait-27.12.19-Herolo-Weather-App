@@ -8,11 +8,15 @@ import * as WeatherActions from './../../store/weather.actions';
 import * as fromApp from './../../store/app.reducer';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from './../../../environments/environment';
+import { fade } from './../../animations/animations';
 
 @Component({
   selector: 'app-weather-info',
   templateUrl: './weather-info.component.html',
-  styleUrls: ['./weather-info.component.css']
+  styleUrls: ['./weather-info.component.css'],
+  animations: [
+    fade
+  ]
 })
 export class WeatherInfoComponent implements OnInit, OnDestroy {
   subscription: Subscription;
