@@ -5,10 +5,10 @@
 export const environment = {
   production: false,
   weatherAPIKey: 'Y8RgWkfnkR5YW0qdYKAo37G47EibuAGA',
-  apiDaily: 'http://dataservice.accuweather.com/currentconditions/v1',
-  apiForecast: 'http://dataservice.accuweather.com/forecasts/v1/daily/5day',
-  apiAutocomplete: 'http://dataservice.accuweather.com/locations/v1/cities/autocomplete',
-  apiGeoLocation: 'http://dataservice.accuweather.com/locations/v1/cities/geoposition/search',
+  apiDaily: 'https://dataservice.accuweather.com/currentconditions/v1',
+  apiForecast: 'https://dataservice.accuweather.com/forecasts/v1/daily/5day',
+  apiAutocomplete: 'https://dataservice.accuweather.com/locations/v1/cities/autocomplete',
+  apiGeoLocation: 'https://dataservice.accuweather.com/locations/v1/cities/geoposition/search',
 };
 
 /*
