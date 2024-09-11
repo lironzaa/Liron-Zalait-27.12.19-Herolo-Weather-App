@@ -24,7 +24,7 @@
     "@ng-bootstrap/ng-bootstrap": "^5.1.4",
     "@ngrx/store": "^8.6.0",
     "angular-ng-autocomplete": "^1.1.14",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^5.0.0",
     "express": "^4.20.0",
     "gh-pages": "^5.0.0",
     "ngx-toastr": "^11.2.1",
