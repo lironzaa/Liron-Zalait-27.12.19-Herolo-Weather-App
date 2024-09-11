@@ -25,7 +25,7 @@
     "@ngrx/store": "^8.6.0",
     "angular-ng-autocomplete": "^1.1.14",
     "bootstrap": "^4.4.1",
-    "express": "^4.19.2",
+    "express": "^4.20.0",
     "gh-pages": "^5.0.0",
     "ngx-toastr": "^11.2.1",
     "rxjs": "~6.4.0",
